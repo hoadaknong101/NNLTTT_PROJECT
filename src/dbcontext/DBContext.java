@@ -1,5 +1,7 @@
 package dbcontext;
 
-public class DBContext {
+import java.sql.Connection;
 
+public class DBContext {
+	private static Connection connection = MySQLConnection.getConnection();	
 }
