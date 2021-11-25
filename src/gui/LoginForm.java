@@ -42,7 +42,9 @@ public class LoginForm {
 	 * Create the application.
 	 */
 	public LoginForm() {
+		
 		initialize();
+		
 	}
 
 	/**
@@ -76,16 +78,21 @@ public class LoginForm {
 		panel.add(lblNewLabel_1);
 		
 		JButton btnNewButton = new JButton("\u0110\u0103ng Nh\u1EADp");
-		btnNewButton.setIcon(new ImageIcon("D:\\Icon\\icons8_enter_26px.png"));
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewButton.setIcon(new ImageIcon("C:\\Users\\THANG\\Documents\\GitHub\\NNLTTT_PROJECT\\ImageIcon\\icons8_login_32px.png"));
 		btnNewButton.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		btnNewButton.setBounds(32, 197, 145, 60);
 		panel.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Tho\u00E1t");
-		btnNewButton_1.setIcon(new ImageIcon("D:\\Icon\\icons8_shutdown_32px.png"));
+		btnNewButton_1.setIcon(new ImageIcon("C:\\Users\\THANG\\Documents\\GitHub\\NNLTTT_PROJECT\\ImageIcon\\icons8_Logout_32px.png"));
 		btnNewButton_1.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
 			}
 		});
 		btnNewButton_1.setBounds(202, 197, 145, 60);
@@ -98,7 +105,7 @@ public class LoginForm {
 		
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_2.setIcon(new ImageIcon("D:\\Icon\\icons8_profile_200px.png"));
+		lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\THANG\\Documents\\GitHub\\NNLTTT_PROJECT\\ImageIcon\\icons8_staff_96px.png"));
 		lblNewLabel_2.setBounds(10, 10, 191, 271);
 		frame.getContentPane().add(lblNewLabel_2);
 	}
