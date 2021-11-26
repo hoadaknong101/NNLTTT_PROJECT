@@ -6,13 +6,11 @@ import java.awt.Font;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
-import java.awt.Label;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
-import java.awt.Color;
 import javax.swing.ImageIcon;
 
 public class NhanVienForm extends JPanel {
@@ -24,6 +22,7 @@ public class NhanVienForm extends JPanel {
 	private JTextField txtMaNQL;
 	private JTextField txtPhong;
 	private JTable table;
+	private JScrollPane scrollPane;
 
 	/**
 	 * Create the panel.
@@ -120,36 +119,26 @@ public class NhanVienForm extends JPanel {
 		add(panel);
 		panel.setLayout(null);
 		
-		JButton btnNewButton = new JButton("Ch\u1ECDn \u1EA2nh");
-		btnNewButton.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnChonAnh = new JButton("Ch\u1ECDn \u1EA2nh");
+		btnChonAnh.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		btnChonAnh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNewButton.setBounds(63, 242, 105, 50);
-		panel.add(btnNewButton);
+		btnChonAnh.setBounds(63, 242, 105, 50);
+		panel.add(btnChonAnh);
 		
-		JLabel lblNewLabel_1 = new JLabel("New label");
-		lblNewLabel_1.setIcon(new ImageIcon("D:\\2.jpg"));
-		lblNewLabel_1.setBounds(10, 10, 201, 228);
-		panel.add(lblNewLabel_1);
-		
-		JRadioButton rbNam = new JRadioButton("Nam");
-		rbNam.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		rbNam.setBounds(166, 233, 113, 30);
-		add(rbNam);
-		
-		JRadioButton rbNu = new JRadioButton("N\u1EEF");
-		rbNu.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		rbNu.setBounds(281, 233, 113, 30);
-		add(rbNu);
+		JLabel lblAvatar = new JLabel("\u1EA2nh");
+		lblAvatar.setIcon(new ImageIcon("D:/2.jpg"));
+		lblAvatar.setBounds(10, 10, 201, 228);
+		panel.add(lblAvatar);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(10, 313, 686, 266);
 		add(panel_1);
 		panel_1.setLayout(null);
 		
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		scrollPane.setBounds(0, 0, 686, 266);
 		panel_1.add(scrollPane);
 		
@@ -157,28 +146,49 @@ public class NhanVienForm extends JPanel {
 		scrollPane.setViewportView(table);
 		
 		JButton btnThem = new JButton("Th\u00EAm");
-		btnThem.setIcon(new ImageIcon("C:\\Users\\THANG\\Documents\\GitHub\\NNLTTT_PROJECT\\ImageIcon\\icons8_add_32px.png"));
+		btnThem.setIcon(new ImageIcon(getClass().getResource("/images/icons8_add_32px.png")));
 		btnThem.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		btnThem.setBounds(706, 382, 115, 50);
 		add(btnThem);
 		
 		JButton btnHuy = new JButton("H\u1EE7y");
-		btnHuy.setIcon(new ImageIcon("C:\\Users\\THANG\\Documents\\GitHub\\NNLTTT_PROJECT\\ImageIcon\\icons8_cancel_32px.png"));
+		btnHuy.setIcon(new ImageIcon(getClass().getResource("/images/icons8_cancel_32px.png")));
 		btnHuy.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		btnHuy.setBounds(831, 382, 115, 50);
 		add(btnHuy);
 		
 		JButton btnLuu = new JButton("L\u01B0u");
-		btnLuu.setIcon(new ImageIcon("C:\\Users\\THANG\\Documents\\GitHub\\NNLTTT_PROJECT\\ImageIcon\\icons8_save_32px.png"));
+		btnLuu.setIcon(new ImageIcon(getClass().getResource("/images/icons8_save_32px.png")));
 		btnLuu.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		btnLuu.setBounds(706, 442, 115, 50);
 		add(btnLuu);
 		
 		JButton btnXoa = new JButton("X\u00F3a");
-		btnXoa.setIcon(new ImageIcon("C:\\Users\\THANG\\Documents\\GitHub\\NNLTTT_PROJECT\\ImageIcon\\icons8_delete_32px.png"));
+		btnXoa.setIcon(new ImageIcon(getClass().getResource("/images/icons8_delete_32px.png")));
 		btnXoa.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		btnXoa.setBounds(831, 442, 115, 50);
 		add(btnXoa);
+		
+		JPanel panelGender = new JPanel();
+		panelGender.setBounds(166, 233, 500, 30);
+		add(panelGender);
+		panelGender.setLayout(null);
+		
+		JRadioButton rbNam = new JRadioButton("Nam");
+		rbNam.setSelected(true);
+		rbNam.setBounds(6, 5, 112, 29);
+		panelGender.add(rbNam);
+		rbNam.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		
+		JRadioButton rbNu = new JRadioButton("N\u1EEF");
+		rbNu.setBounds(120, 5, 112, 29);
+		panelGender.add(rbNu);
+		rbNu.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		
+		JRadioButton rbKhac = new JRadioButton("Kh\u00E1c");
+		rbKhac.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		rbKhac.setBounds(234, 5, 112, 29);
+		panelGender.add(rbKhac);
 
 	}
 }

@@ -3,10 +3,11 @@ package gui;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import java.awt.Window.Type;
 
 public class ThanNhanForm {
 
-	private JFrame frame;
+	private JFrame frmDanhSchNgi;
 
 	/**
 	 * Launch the application.
@@ -16,7 +17,7 @@ public class ThanNhanForm {
 			public void run() {
 				try {
 					ThanNhanForm window = new ThanNhanForm();
-					window.frame.setVisible(true);
+					window.frmDanhSchNgi.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -35,9 +36,11 @@ public class ThanNhanForm {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmDanhSchNgi = new JFrame();
+		frmDanhSchNgi.setType(Type.UTILITY);
+		frmDanhSchNgi.setTitle("Danh s\u00E1ch ng\u01B0\u1EDDi th\u00E2n");
+		frmDanhSchNgi.setBounds(100, 100, 957, 512);
+		frmDanhSchNgi.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 }

@@ -3,10 +3,11 @@ package gui;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import java.awt.Window.Type;
 
 public class PhanCongForm {
 
-	private JFrame frame;
+	private JFrame frmBngPhnCng;
 
 	/**
 	 * Launch the application.
@@ -16,7 +17,7 @@ public class PhanCongForm {
 			public void run() {
 				try {
 					PhanCongForm window = new PhanCongForm();
-					window.frame.setVisible(true);
+					window.frmBngPhnCng.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -35,9 +36,11 @@ public class PhanCongForm {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmBngPhnCng = new JFrame();
+		frmBngPhnCng.setType(Type.UTILITY);
+		frmBngPhnCng.setTitle("B\u1EA3ng ph\u00E2n c\u00F4ng c\u00F4ng vi\u1EC7c");
+		frmBngPhnCng.setBounds(100, 100, 903, 485);
+		frmBngPhnCng.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 }
