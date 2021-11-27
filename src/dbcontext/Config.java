@@ -1,18 +1,17 @@
 package dbcontext;
 
 public class Config {
+	public static String DB_NAME = "congty";
+	
 	// Hoa
-//	final String url="jdbc:mysql://localhost:3306/congty";
-//	final String user = "";
-//	final String password = "";
+//	public static String USERNAME = "";
+//	public static String PASSWORD = "";
 	
 	// Phi
-	final static String url="jdbc:mysql://127.0.0.1:3306/congty";
-	final static String user = "nhatphi";
-	final static String password = "12345";
+	public static String USERNAME = "nhatphi";
+	public static String PASSWORD = "12345";
 
 	// Thang
-//	final String url="jdbc:mysql://localhost:3306/congty";
-//	final String user = "";
-//	final String password = "";
+//	public static String USERNAME = "";
+//	public static String PASSWORD = "";
 }

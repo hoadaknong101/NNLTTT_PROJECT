@@ -2,16 +2,25 @@ package dbcontext;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 
 public class MySQLConnection {
-	public static Connection getConnection() {		
+	private static String DRIVER_STRING = "com.mysql.jdbc.Driver";
+	private static String USERNAME = Config.USERNAME;
+	private static String PASSWORD = Config.PASSWORD;
+	private static String DATABASE_NAME = Config.DB_NAME;
+	private static String URL = "jdbc:mysql://localhost:3306/" + DATABASE_NAME;
+	// public static String URL = "jdbc:mysql://127.0.0.1:3306/" + DATABASE_NAME;
+	
+	public static Connection getConnection() {
+		Connection conn = null;
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			return DriverManager.getConnection(Config.url, Config.user, Config.password);
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
+			Class.forName(DRIVER_STRING);
+			conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+			System.out.println("Connected");
+		} catch (Exception ex) {
+			System.out.println("Can not connect to the database");
+			ex.printStackTrace();
 		}
-		return null;
+		return conn;
 	}
 }
