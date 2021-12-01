@@ -1,17 +1,24 @@
 package gui;
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.JSeparator;
-import javax.swing.JTextField;
-import javax.swing.JRadioButton;
-import javax.swing.JButton;
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
+import bean.NhanVien;
+import dao.NhanVienDAO;
+
 import java.awt.event.ActionListener;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
-import javax.swing.JTable;
-import javax.swing.JScrollPane;
-import javax.swing.ImageIcon;
+import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
+
+import javax.imageio.ImageIO;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class NhanVienForm extends JPanel {
 	private JTextField txtMaNhanVien;
@@ -21,8 +28,13 @@ public class NhanVienForm extends JPanel {
 	private JTextField txtLuong;
 	private JTextField txtMaNQL;
 	private JTextField txtPhong;
+	private JLabel lblAvatar;
 	private JTable table;
 	private JScrollPane scrollPane;
+	private JButton btnThem;
+	private JButton btnLuu;
+	private JButton btnHuy;
+	private JButton btnXoa;
 
 	/**
 	 * Create the panel.
@@ -123,12 +135,29 @@ public class NhanVienForm extends JPanel {
 		btnChonAnh.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		btnChonAnh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				JFileChooser f =new JFileChooser ("D:\\");
+				f.setDialogTitle("Mở file");
+				f.showOpenDialog(null);
+				try {
+					File ftenanh = f.getSelectedFile();
+					String path = ftenanh.getAbsolutePath();
+					//System.out.print(path);
+					if (path != "") {
+						BufferedImage img = ImageIO.read(ftenanh);
+						Image dimg = img.getScaledInstance(lblAvatar.getWidth(), lblAvatar.getHeight(),
+						        Image.SCALE_SMOOTH);
+						ImageIcon icon = new ImageIcon(dimg);
+						lblAvatar.setIcon(icon);
+					}
+				} catch (Exception err) {
+					JOptionPane.showMessageDialog(btnChonAnh, "Không có ảnh được chọn!");
+				}
 			}
 		});
 		btnChonAnh.setBounds(63, 242, 105, 50);
 		panel.add(btnChonAnh);
 		
-		JLabel lblAvatar = new JLabel("\u1EA2nh");
+		lblAvatar = new JLabel("\u1EA2nh");
 		lblAvatar.setIcon(new ImageIcon("D:/2.jpg"));
 		lblAvatar.setBounds(10, 10, 201, 228);
 		panel.add(lblAvatar);
@@ -138,57 +167,163 @@ public class NhanVienForm extends JPanel {
 		add(panel_1);
 		panel_1.setLayout(null);
 		
+		JComboBox<String> cbGender = new JComboBox<String>();
+		cbGender.addItem("nam");
+		cbGender.addItem("nu");
+		cbGender.addItem("khac");
+		cbGender.setBounds(166, 238, 181, 22);
+		add(cbGender);
+		
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(0, 0, 686, 266);
 		panel_1.add(scrollPane);
 		
 		table = new JTable();
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int i = table.getSelectedRow();
+				txtMaNhanVien.setText(table.getValueAt(i, 0).toString());
+				txtHoTen.setText(table.getValueAt(i, 1).toString());
+				txtDiaChi.setText(table.getValueAt(i, 3).toString());
+				txtLuong.setText(table.getValueAt(i, 5).toString());
+				txtMaNQL.setText(table.getValueAt(i, 6).toString());
+				txtNgaySinh.setText(table.getValueAt(i, 2).toString());
+				txtPhong.setText(table.getValueAt(i, 7).toString());
+				String gender = table.getValueAt(i, 4).toString();
+				cbGender.setSelectedItem(gender);
+				try {
+					ImageIcon img = (ImageIcon)table.getValueAt(i, 8);
+					lblAvatar.setIcon(img);
+				} catch (Exception e2) {
+					lblAvatar.setIcon(null);
+				}
+			}
+		});
+		LoadData();
 		scrollPane.setViewportView(table);
 		
-		JButton btnThem = new JButton("Th\u00EAm");
+		btnThem = new JButton("Th\u00EAm");
+		btnThem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ClearContent();
+				EnableControl();
+				table.setEnabled(false);
+			}
+		});
 		btnThem.setIcon(new ImageIcon(getClass().getResource("/images/icons8_add_32px.png")));
 		btnThem.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		btnThem.setBounds(706, 382, 115, 50);
 		add(btnThem);
 		
-		JButton btnHuy = new JButton("H\u1EE7y");
+		btnHuy = new JButton("H\u1EE7y");
+		btnHuy.setEnabled(false);
+		btnHuy.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DisableControl();
+				table.setEnabled(true);
+			}
+		});
 		btnHuy.setIcon(new ImageIcon(getClass().getResource("/images/icons8_cancel_32px.png")));
 		btnHuy.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		btnHuy.setBounds(831, 382, 115, 50);
+		btnHuy.setBounds(831, 442, 115, 50);
 		add(btnHuy);
 		
-		JButton btnLuu = new JButton("L\u01B0u");
+		btnLuu = new JButton("L\u01B0u");
+		btnLuu.setEnabled(false);
+		btnLuu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				table.setEnabled(true);
+			}
+		});
 		btnLuu.setIcon(new ImageIcon(getClass().getResource("/images/icons8_save_32px.png")));
 		btnLuu.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		btnLuu.setBounds(706, 442, 115, 50);
+		btnLuu.setBounds(831, 383, 115, 50);
 		add(btnLuu);
 		
-		JButton btnXoa = new JButton("X\u00F3a");
+		btnXoa = new JButton("X\u00F3a");
+		btnXoa.setEnabled(false);
+		btnXoa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ClearContent();
+				table.setEnabled(true);
+			}
+		});
 		btnXoa.setIcon(new ImageIcon(getClass().getResource("/images/icons8_delete_32px.png")));
 		btnXoa.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		btnXoa.setBounds(831, 442, 115, 50);
+		btnXoa.setBounds(706, 443, 115, 50);
 		add(btnXoa);
-		
-		JPanel panelGender = new JPanel();
-		panelGender.setBounds(166, 233, 500, 30);
-		add(panelGender);
-		panelGender.setLayout(null);
-		
-		JRadioButton rbNam = new JRadioButton("Nam");
-		rbNam.setSelected(true);
-		rbNam.setBounds(6, 5, 112, 29);
-		panelGender.add(rbNam);
-		rbNam.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		
-		JRadioButton rbNu = new JRadioButton("N\u1EEF");
-		rbNu.setBounds(120, 5, 112, 29);
-		panelGender.add(rbNu);
-		rbNu.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		
-		JRadioButton rbKhac = new JRadioButton("Kh\u00E1c");
-		rbKhac.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		rbKhac.setBounds(234, 5, 112, 29);
-		panelGender.add(rbKhac);
-
+	}
+	
+	private void EnableControl() {
+		btnLuu.setEnabled(true);
+		btnHuy.setEnabled(true);
+		btnXoa.setEnabled(true);
+	}
+	
+	private void DisableControl() {
+		btnLuu.setEnabled(false);
+		btnHuy.setEnabled(false);
+		btnXoa.setEnabled(false);
+	}
+	
+	private void ClearContent() {
+		txtMaNhanVien.setText("");
+		txtHoTen.setText("");
+		txtNgaySinh.setText("");
+		txtDiaChi.setText("");
+		txtLuong.setText("");
+		txtMaNQL.setText("");
+		txtPhong.setText("");
+		lblAvatar.setIcon(null);
+	}
+	
+	private void LoadData() {
+		String[] labels = {"Mã NV", "Họ tên", "Ngày sinh", "Địa chỉ", "Giới tính", "Lương", "Mã NQL", "Phòng", "Image"};
+		DefaultTableModel tbModel = new DefaultTableModel(labels, 0);
+		String sql = "select * from nhanvien";
+		ArrayList<NhanVien> nhanViens = NhanVienDAO.LayThongTinNhanVien(sql);
+		try {
+			for (NhanVien nhanVien : nhanViens) {
+				Object[] row = {nhanVien.getMaNhanVien(),
+								nhanVien.getHoTen(),
+								nhanVien.getNgaySinh(),
+								nhanVien.getDiaChi(),
+								nhanVien.getPhai(),
+								nhanVien.getLuong(),
+								nhanVien.getMaNQL(),
+								nhanVien.getMaPB(),
+								nhanVien.getImage()};
+				tbModel.addRow(row);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		table.setModel(tbModel);
+	}
+	
+	private static byte[] ImageIconToByteArray(ImageIcon icon) {
+		try {
+		    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		    ImageIO.write((RenderedImage) icon, "jpg", bos );
+		    byte [] data = bos.toByteArray();
+		    return data;
+		} catch (Exception ex) {
+		    ex.printStackTrace();
+		}
+		return null;
+	}
+	
+	private static ImageIcon ByteArrayToImageIcon(byte[] data) {
+		try {
+			System.out.println(data);
+			ByteArrayInputStream bis = new ByteArrayInputStream(data);
+		    BufferedImage img = ImageIO.read(bis);
+//		    Image dimg = img.getScaledInstance(lblAvatar.getWidth(), lblAvatar.getHeight(),
+//			        Image.SCALE_SMOOTH);
+			ImageIcon icon = new ImageIcon(img);  
+			return icon;
+		} catch (Exception e) {}
+		return null;
 	}
 }
