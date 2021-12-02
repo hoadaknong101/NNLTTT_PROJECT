@@ -8,8 +8,8 @@ public class MySQLConnection {
 	private static String USERNAME = Config.USERNAME;
 	private static String PASSWORD = Config.PASSWORD;
 	private static String DATABASE_NAME = Config.DB_NAME;
-	//private static String URL = "jdbc:mysql://localhost:3306/" + DATABASE_NAME;
-	private static String URL = "jdbc:mysql://127.0.0.1:3306/" + DATABASE_NAME;
+	private static String URL = "jdbc:mysql://localhost:3306/" + DATABASE_NAME;
+	//private static String URL = "jdbc:mysql://127.0.0.1:3306/" + DATABASE_NAME;
 	
 	public static Connection getConnection() {
 		Connection conn = null;

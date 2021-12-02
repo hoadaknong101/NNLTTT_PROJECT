@@ -8,14 +8,11 @@ import bean.NhanVien;
 import dao.NhanVienDAO;
 
 import java.awt.event.ActionListener;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
-
 import javax.imageio.ImageIO;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -35,6 +32,7 @@ public class NhanVienForm extends JPanel {
 	private JButton btnLuu;
 	private JButton btnHuy;
 	private JButton btnXoa;
+	private boolean flagThem = false;
 
 	/**
 	 * Create the panel.
@@ -182,6 +180,7 @@ public class NhanVienForm extends JPanel {
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				flagThem = false;
 				int i = table.getSelectedRow();
 				txtMaNhanVien.setText(table.getValueAt(i, 0).toString());
 				txtHoTen.setText(table.getValueAt(i, 1).toString());
@@ -198,6 +197,7 @@ public class NhanVienForm extends JPanel {
 				} catch (Exception e2) {
 					lblAvatar.setIcon(null);
 				}
+				EnableControl();
 			}
 		});
 		LoadData();
@@ -206,9 +206,10 @@ public class NhanVienForm extends JPanel {
 		btnThem = new JButton("Th\u00EAm");
 		btnThem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				flagThem = true;
 				ClearContent();
 				EnableControl();
-				table.setEnabled(false);
+				btnXoa.setEnabled(false);
 			}
 		});
 		btnThem.setIcon(new ImageIcon(getClass().getResource("/images/icons8_add_32px.png")));
@@ -221,7 +222,8 @@ public class NhanVienForm extends JPanel {
 		btnHuy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DisableControl();
-				table.setEnabled(true);
+				ClearContent();
+				flagThem = false;
 			}
 		});
 		btnHuy.setIcon(new ImageIcon(getClass().getResource("/images/icons8_cancel_32px.png")));
@@ -233,7 +235,35 @@ public class NhanVienForm extends JPanel {
 		btnLuu.setEnabled(false);
 		btnLuu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				table.setEnabled(true);
+				NhanVien nv = new NhanVien(Integer.valueOf(txtMaNhanVien.getText()),
+						   txtHoTen.getText(),
+						   Date.valueOf(txtNgaySinh.getText()),
+						   txtDiaChi.getText(),
+						   cbGender.getSelectedItem().toString(),
+						   txtLuong.getText(),
+						   Integer.valueOf(txtMaNQL.getText()),
+						   Integer.valueOf(txtPhong.getText()),
+						   (ImageIcon)lblAvatar.getIcon());
+				if(flagThem) {
+					if(NhanVienDAO.themNhanVien(nv)) {
+						JOptionPane.showMessageDialog(btnLuu, "Thêm nhân viên thành công!");
+						LoadData();
+					}
+					else {
+						JOptionPane.showMessageDialog(btnLuu, "Vui lòng kiểm tra lại thông tin!");
+					}
+				}
+				else {
+					if(NhanVienDAO.suaNhanVien(nv)) {
+						JOptionPane.showMessageDialog(btnLuu, "Sửa thông tin nhân viên thành công!");
+						LoadData();
+					}
+					else {
+						JOptionPane.showMessageDialog(btnLuu, "Vui lòng kiểm tra lại thông tin!");
+					}
+				}
+				DisableControl();
+				flagThem = false;
 			}
 		});
 		btnLuu.setIcon(new ImageIcon(getClass().getResource("/images/icons8_save_32px.png")));
@@ -245,8 +275,20 @@ public class NhanVienForm extends JPanel {
 		btnXoa.setEnabled(false);
 		btnXoa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				int id = Integer.valueOf(txtMaNhanVien.getText());
+				if(JOptionPane.showConfirmDialog(btnXoa, "Bạn có chắc xóa thông tin nhân viên " + txtHoTen.getText() + "") == JOptionPane.YES_OPTION) {
+					if(NhanVienDAO.xoaNhanVien(id)) {
+						JOptionPane.showMessageDialog(btnXoa, "Xóa nhân viên thành công!");
+						LoadData();
+					}
+					else {
+						JOptionPane.showMessageDialog(btnXoa, "Không thể xóa thông tin!");
+					}
+				}
 				ClearContent();
-				table.setEnabled(true);
+				DisableControl();
+				LoadData();
+				flagThem = false;
 			}
 		});
 		btnXoa.setIcon(new ImageIcon(getClass().getResource("/images/icons8_delete_32px.png")));
@@ -300,30 +342,5 @@ public class NhanVienForm extends JPanel {
 			e.printStackTrace();
 		}
 		table.setModel(tbModel);
-	}
-	
-	private static byte[] ImageIconToByteArray(ImageIcon icon) {
-		try {
-		    ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		    ImageIO.write((RenderedImage) icon, "jpg", bos );
-		    byte [] data = bos.toByteArray();
-		    return data;
-		} catch (Exception ex) {
-		    ex.printStackTrace();
-		}
-		return null;
-	}
-	
-	private static ImageIcon ByteArrayToImageIcon(byte[] data) {
-		try {
-			System.out.println(data);
-			ByteArrayInputStream bis = new ByteArrayInputStream(data);
-		    BufferedImage img = ImageIO.read(bis);
-//		    Image dimg = img.getScaledInstance(lblAvatar.getWidth(), lblAvatar.getHeight(),
-//			        Image.SCALE_SMOOTH);
-			ImageIcon icon = new ImageIcon(img);  
-			return icon;
-		} catch (Exception e) {}
-		return null;
 	}
 }

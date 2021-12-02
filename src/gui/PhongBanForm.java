@@ -9,6 +9,8 @@ import javax.swing.JTable;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.ImageIcon;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class PhongBanForm extends JPanel {
 	private JTextField txtMaPhongBan;
@@ -17,6 +19,11 @@ public class PhongBanForm extends JPanel {
 	private JTextField txtNgayNhanChuc;
 	private JTextField txtDiaDiem;
 	private JTable table;
+	private JButton btnThem;
+	private JButton btnLuu;
+	private JButton btnHuy;
+	private JButton btnXoa;
+	private boolean flagThem = false;
 
 	/**
 	 * Create the panel.
@@ -39,6 +46,7 @@ public class PhongBanForm extends JPanel {
 		add(lblMPhngBan);
 		
 		txtMaPhongBan = new JTextField();
+		txtMaPhongBan.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		txtMaPhongBan.setColumns(10);
 		txtMaPhongBan.setBounds(133, 71, 129, 30);
 		add(txtMaPhongBan);
@@ -49,11 +57,13 @@ public class PhongBanForm extends JPanel {
 		add(lblTnPhngBan);
 		
 		txtTenPhongBan = new JTextField();
+		txtTenPhongBan.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		txtTenPhongBan.setColumns(10);
 		txtTenPhongBan.setBounds(427, 71, 181, 30);
 		add(txtTenPhongBan);
 		
 		txtTruongPhong = new JTextField();
+		txtTruongPhong.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		txtTruongPhong.setColumns(10);
 		txtTruongPhong.setBounds(133, 111, 475, 30);
 		add(txtTruongPhong);
@@ -69,6 +79,8 @@ public class PhongBanForm extends JPanel {
 		add(lblNgyNhnChc);
 		
 		txtNgayNhanChuc = new JTextField();
+		txtNgayNhanChuc.setToolTipText("\u0110\u1ECBnh d\u1EA1ng: YYYY-MM-DD");
+		txtNgayNhanChuc.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		txtNgayNhanChuc.setColumns(10);
 		txtNgayNhanChuc.setBounds(133, 153, 475, 30);
 		add(txtNgayNhanChuc);
@@ -79,6 +91,7 @@ public class PhongBanForm extends JPanel {
 		add(lblaim);
 		
 		txtDiaDiem = new JTextField();
+		txtDiaDiem.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		txtDiaDiem.setColumns(10);
 		txtDiaDiem.setBounds(133, 193, 475, 30);
 		add(txtDiaDiem);
@@ -95,29 +108,73 @@ public class PhongBanForm extends JPanel {
 		table = new JTable();
 		scrollPane.setViewportView(table);
 		
-		JButton btnXoa = new JButton("X\u00F3a");
+		btnXoa = new JButton("X\u00F3a");
+		btnXoa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		btnXoa.setIcon(new ImageIcon(getClass().getResource("/images/icons8_delete_32px.png")));
 		btnXoa.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		btnXoa.setBounds(783, 150, 115, 50);
 		add(btnXoa);
 		
-		JButton btnLuu = new JButton("L\u01B0u");
+		btnLuu = new JButton("L\u01B0u");
+		btnLuu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		btnLuu.setIcon(new ImageIcon(getClass().getResource("/images/icons8_save_32px.png")));
 		btnLuu.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		btnLuu.setBounds(658, 150, 115, 50);
 		add(btnLuu);
 		
-		JButton btnThem = new JButton("Th\u00EAm");
+		btnThem = new JButton("Th\u00EAm");
+		btnThem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		btnThem.setIcon(new ImageIcon(getClass().getResource("/images/icons8_add_32px.png")));
 		btnThem.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		btnThem.setBounds(658, 90, 115, 50);
 		add(btnThem);
 		
-		JButton btnHuy = new JButton("H\u1EE7y");
+		btnHuy = new JButton("H\u1EE7y");
+		btnHuy.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		btnHuy.setIcon(new ImageIcon(getClass().getResource("/images/icons8_cancel_32px.png")));
 		btnHuy.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		btnHuy.setBounds(783, 90, 115, 50);
 		add(btnHuy);
 
+	}
+	
+	private void EnableControl() {
+		btnLuu.setEnabled(true);
+		btnHuy.setEnabled(true);
+		btnXoa.setEnabled(true);
+	}
+	
+	private void DisableControl() {
+		btnLuu.setEnabled(false);
+		btnHuy.setEnabled(false);
+		btnXoa.setEnabled(false);
+	}
+	
+	private void LoadData() {
+		
+	}
+	
+	private void ClearContent() {
+		txtMaPhongBan.setText("");
+		txtTenPhongBan.setText("");
+		txtTruongPhong.setText("");
+		txtNgayNhanChuc.setText("");
+		txtDiaDiem.setText("");
 	}
 }

@@ -1,13 +1,14 @@
 package dao;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.CallableStatement;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 
@@ -54,7 +55,71 @@ public class NhanVienDAO {
 		    BufferedImage img = ImageIO.read(bis);
 			ImageIcon icon = new ImageIcon(img);  
 			return icon;
-		} catch (Exception e) { }
-		return null;
+		} catch (Exception e) { 
+			return null;
+		}
+	}
+
+	private static byte[] ImageIconToByteArray(ImageIcon icon) {
+		if (icon == null)
+			return null;
+		try {
+		    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		    ImageIO.write((RenderedImage) icon, "jpg", bos );
+		    byte [] data = bos.toByteArray();
+		    return data;
+		} catch (Exception ex) {
+		    ex.printStackTrace();
+		    return null;
+		}
+	}
+	
+	public static boolean themNhanVien(NhanVien nv) {
+		try {
+			CallableStatement statement = connection.prepareCall("{call insertNhanVien(?,?,?,?,?,?,?,?,?)}");
+			statement.setInt(1, nv.getMaNhanVien());
+			statement.setString(2, nv.getHoTen());
+			statement.setDate(3, nv.getNgaySinh());
+			statement.setString(4, nv.getDiaChi());
+			statement.setString(5, nv.getPhai());
+			statement.setString(6, nv.getLuong());
+			statement.setInt(7, nv.getMaNQL());
+			statement.setInt(8, nv.getMaPB());
+			statement.setBytes(9, ImageIconToByteArray(nv.getImage()));
+			statement.execute();
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+	
+	public static boolean suaNhanVien(NhanVien nv) {
+		try {
+			CallableStatement statement = connection.prepareCall("{call updateNhanVien(?,?,?,?,?,?,?,?,?)}");
+			statement.setInt(1, nv.getMaNhanVien());
+			statement.setString(2, nv.getHoTen());
+			statement.setDate(3, nv.getNgaySinh());
+			statement.setString(4, nv.getDiaChi());
+			statement.setString(5, nv.getPhai());
+			statement.setString(6, nv.getLuong());
+			statement.setInt(7, nv.getMaNQL());
+			statement.setInt(8, nv.getMaPB());
+			statement.setBytes(9, ImageIconToByteArray(nv.getImage()));
+			statement.execute();
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	public static boolean xoaNhanVien(int id) {
+		try {
+			CallableStatement statement = connection.prepareCall("{call deleteNhanVien(?)}");
+			statement.setInt(1, id);
+			statement.execute();
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 }

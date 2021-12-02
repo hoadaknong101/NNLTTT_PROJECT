@@ -7,6 +7,7 @@ public class ThanNhan {
 	private String phai;
 	private Date ngaySinh;
 	private String quanHe;
+	private int maNVTN;
 	
 	public String getPhai() {
 		return phai;
@@ -33,12 +34,25 @@ public class ThanNhan {
 		this.quanHe = quanHe;
 	}
 	
-	public ThanNhan() {}
+	public ThanNhan() {
+		this.tenThanNhan = "Unknown";
+		this.phai = "undefined";
+		this.ngaySinh = null;
+		this.quanHe = "Unknown";
+		this.maNVTN = -1;
+	}
 	
-	public ThanNhan(String tenThanNhan, String phai, Date ngaySinh, String quanHe) {
+	public ThanNhan(String tenThanNhan, String phai, Date ngaySinh, String quanHe, int maNVTN) {
 		this.tenThanNhan = tenThanNhan;
 		this.phai = phai;
 		this.ngaySinh = ngaySinh;
 		this.quanHe = quanHe;
+		this.maNVTN = maNVTN;
+	}
+	public int getMaNVTN() {
+		return maNVTN;
+	}
+	public void setMaNVTN(int maNVTN) {
+		this.maNVTN = maNVTN;
 	}
 }

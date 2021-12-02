@@ -82,7 +82,15 @@ public class LoginForm {
 		JButton btnDangNhap = new JButton("\u0110\u0103ng Nh\u1EADp");
 		btnDangNhap.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				String taiKhoan = txtUser.getText();
+				String matKhau = txtPassword.getSelectedText();
+				if(taiKhoan == "" || matKhau == "") {
+					JOptionPane.showMessageDialog(btnDangNhap, "Vui lòng nhập đủ thông tin!");
+					return;
+				}
+				if(taiKhoan == "admin" && matKhau == "admin") {
+					JOptionPane.showMessageDialog(btnDangNhap, "OK");
+				}
 			}
 		});
 		btnDangNhap.setIcon(new ImageIcon(getClass().getResource("/images/icons8_login_32px.png")));

@@ -9,6 +9,8 @@ import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class DuAnForm extends JPanel {
 	private JTextField txtMaDuAn;
@@ -16,6 +18,11 @@ public class DuAnForm extends JPanel {
 	private JTextField txtDiaDiem;
 	private JTextField txtPhong;
 	private JTable table;
+	private JButton btnThem;
+	private JButton btnLuu;
+	private JButton btnHuy;
+	private JButton btnXoa;
+	private boolean flagThem = false;
 
 	/**
 	 * Create the panel.
@@ -72,25 +79,41 @@ public class DuAnForm extends JPanel {
 		txtPhong.setColumns(10);
 		add(txtPhong);
 		
-		JButton btnThem = new JButton("Th\u00EAm");
+		btnThem = new JButton("Th\u00EAm");
+		btnThem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnThem.setBounds(672, 73, 115, 50);
 		btnThem.setIcon(new ImageIcon("C:\\Users\\THANG\\Documents\\GitHub\\NNLTTT_PROJECT\\ImageIcon\\icons8_add_32px.png"));
 		btnThem.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		add(btnThem);
 		
-		JButton btnHuy = new JButton("H\u1EE7y");
+		btnHuy = new JButton("H\u1EE7y");
+		btnHuy.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnHuy.setBounds(797, 73, 115, 50);
 		btnHuy.setIcon(new ImageIcon("C:\\Users\\THANG\\Documents\\GitHub\\NNLTTT_PROJECT\\ImageIcon\\icons8_cancel_32px.png"));
 		btnHuy.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		add(btnHuy);
 		
-		JButton btnXoa = new JButton("X\u00F3a");
+		btnXoa = new JButton("X\u00F3a");
+		btnXoa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnXoa.setBounds(797, 133, 115, 50);
 		btnXoa.setIcon(new ImageIcon("C:\\Users\\THANG\\Documents\\GitHub\\NNLTTT_PROJECT\\ImageIcon\\icons8_delete_32px.png"));
 		btnXoa.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		add(btnXoa);
 		
-		JButton btnLuu = new JButton("L\u01B0u");
+		btnLuu = new JButton("L\u01B0u");
+		btnLuu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnLuu.setBounds(672, 133, 115, 50);
 		btnLuu.setIcon(new ImageIcon("C:\\Users\\THANG\\Documents\\GitHub\\NNLTTT_PROJECT\\ImageIcon\\icons8_save_32px.png"));
 		btnLuu.setFont(new Font("Times New Roman", Font.BOLD, 16));
@@ -108,5 +131,28 @@ public class DuAnForm extends JPanel {
 		table = new JTable();
 		scrollPane.setViewportView(table);
 
+	}
+	
+	private void EnableControl() {
+		btnLuu.setEnabled(true);
+		btnHuy.setEnabled(true);
+		btnXoa.setEnabled(true);
+	}
+	
+	private void DisableControl() {
+		btnLuu.setEnabled(false);
+		btnHuy.setEnabled(false);
+		btnXoa.setEnabled(false);
+	}
+	
+	private void LoadData() {
+		
+	}
+	
+	private void ClearContent() {
+		txtMaDuAn.setText("");
+		txtTenDuAn.setText("");
+		txtPhong.setText("");
+		txtDiaDiem.setText("");
 	}
 }
