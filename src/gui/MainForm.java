@@ -13,20 +13,20 @@ import javax.swing.ImageIcon;
 import javax.swing.JTabbedPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.Window.Type;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class MainForm extends JFrame {
 	private NhanVienForm mStaffPanel;
 	private PhongBanForm mRoomPanel;
 	private DuAnForm mProjectPanel;
-	private JFrame frame;
 	private static MainForm frmMain=new MainForm();
+	private static String taiKhoan;
+	
 	JMenuItem mntmDangXuat = new JMenuItem("\u0110\u0103ng xu\u1EA5t");
+	
 	/**
 	 * Launch the application.
 	 */
+	@SuppressWarnings("deprecation")
 	public static synchronized MainForm getInstance(){
         try {
             if (frmMain == null) {
@@ -37,6 +37,7 @@ public class MainForm extends JFrame {
         }
         return frmMain;
     }
+	
 /*	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -64,11 +65,13 @@ public class MainForm extends JFrame {
 	private void btnDangXuatActionPerformed(ActionEvent e)
 	{
 		if (JOptionPane.showConfirmDialog(mntmDangXuat, "Bạn muốn đăng xuất?", "Thông báo", 
-		        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION)
+		{
 			LoginForm.getInstance().setVisible(true);
 			this.dispose();
-			}
+		}
 	}
+	
 	private void initialize() {
 		/*frame = new JFrame();
 		frame.setType(Type.UTILITY);
@@ -79,6 +82,7 @@ public class MainForm extends JFrame {
 		setResizable(false);
 		setBounds(100, 100, 1000, 700);
 		getContentPane().setLayout(null);
+		
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBounds(0, 0, 986, 30);
 		menuBar.setFont(new Font("Times New Roman", Font.BOLD, 16));
@@ -94,6 +98,19 @@ public class MainForm extends JFrame {
 				btnDangXuatActionPerformed(e);
 			}
 		});
+		
+		JMenuItem mntmDoiMatKhau = new JMenuItem("Đổi mật khẩu");
+		mntmDoiMatKhau.setIcon(new ImageIcon(getClass().getResource("/images/password_32px.png")));
+		mntmDoiMatKhau.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		mntmDoiMatKhau.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		mnHeThong.add(mntmDoiMatKhau);
+		
+		JSeparator separator_4 = new JSeparator();
+		mnHeThong.add(separator_4);
 		mntmDangXuat.setIcon(new ImageIcon(getClass().getResource("/images/icons8_Logout_32px.png")));
 		mntmDangXuat.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		mnHeThong.add(mntmDangXuat);
@@ -216,5 +233,13 @@ public class MainForm extends JFrame {
 		mntmQuanLyDuAn.setIcon(new ImageIcon(getClass().getResource("/images/icons8_project_32px.png")));
 		mntmQuanLyDuAn.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		mnQuanLy.add(mntmQuanLyDuAn);
+	}
+
+	public String getTaiKhoan() {
+		return taiKhoan;
+	}
+
+	public void setTaiKhoan(String taiKhoan) {
+		MainForm.taiKhoan = taiKhoan;
 	}
 }

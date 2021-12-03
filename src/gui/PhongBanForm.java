@@ -248,9 +248,10 @@ public class PhongBanForm extends JPanel {
 		ArrayList<PhongBan> danhSach = PhongBanDAO.LayThongTinPhongBan();
 		try {
 			for(PhongBan pb : danhSach) {
+				String maTP = (pb.getMaTruongPhong() == 0) ? "" : String.valueOf(pb.getMaTruongPhong());
 				Object[] row = {pb.getMaPhongBan(),
 								pb.getTenPhongBan(),
-								pb.getMaTruongPhong(),
+								maTP,
 								pb.getNgayNhanChuc(),
 								pb.getDiaDiem()};
 				model.addRow(row);

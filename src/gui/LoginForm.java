@@ -17,15 +17,14 @@ import javax.swing.SwingConstants;
 
 import dao.NhanVienDAO;
 
-import java.awt.Window.Type;
-
 public class LoginForm extends JFrame {
 
-	private JFrame frame;
 	private JTextField txtUser;
 	private JPasswordField txtPassword;
 	private static LoginForm frmLogin = new LoginForm();
 	JButton btnDangNhap = new JButton("\u0110\u0103ng Nh\u1EADp");
+	
+	@SuppressWarnings("deprecation")
 	public static synchronized LoginForm getInstance(){
         try {
             if (frmLogin == null) {
@@ -36,6 +35,7 @@ public class LoginForm extends JFrame {
         }
         return frmLogin;
     }
+	
 	/**
 	 * Launch the application.
 	 */
@@ -61,25 +61,28 @@ public class LoginForm extends JFrame {
 	 */
 	public boolean KiemTraThongTinDangNhap(String taiKhoan,String matKhau)
 	{
-		
-		return (NhanVienDAO.kiemTraThongTinDangNhap(taiKhoan, matKhau));
+		return NhanVienDAO.kiemTraThongTinDangNhap(taiKhoan, matKhau);
 	}
+	
 	public void btnDangNhapActionPerformed(ActionEvent e)
 	{
 		String passText = new String(txtPassword.getPassword());
-		if(txtUser.getText().trim().isEmpty()||passText.isEmpty()) {
+		
+		if(txtUser.getText().trim().isEmpty() || passText.isEmpty()) {
 			JOptionPane.showMessageDialog(btnDangNhap, "Vui lòng nhập đủ thông tin!");
 			return;
 		}
-		else if(KiemTraThongTinDangNhap(txtUser.getText(),passText)){
+		else if(KiemTraThongTinDangNhap(txtUser.getText(), passText)){
+			MainForm.getInstance().setTaiKhoan(txtUser.getText());
 			MainForm.getInstance().setVisible(true);
 			this.dispose();
-			}
+		}
 		else {
 			JOptionPane.showMessageDialog(btnDangNhap, "Sai thông tin đăng nhập!"+"\n"
 					+ "Xin vui lòng nhập lại");
 		}
 	}
+	
 	private void initialize() {
 		setType(Type.UTILITY);
 		setBounds(100, 100, 608, 350);
@@ -139,9 +142,6 @@ public class LoginForm extends JFrame {
 		});
 		btnThoat.setBounds(202, 197, 145, 60);
 		panel.add(btnThoat);
-		
-		
-	
 		
 		JLabel lblIcon = new JLabel("");
 		lblIcon.setHorizontalAlignment(SwingConstants.CENTER);

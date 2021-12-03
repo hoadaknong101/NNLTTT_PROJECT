@@ -235,13 +235,20 @@ public class NhanVienForm extends JPanel {
 		btnLuu.setEnabled(false);
 		btnLuu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				int maNQL;
+				if(txtMaNQL.getText().trim().isEmpty()) {
+					maNQL = 0;
+				}
+				else {
+					maNQL = Integer.valueOf(txtMaNQL.getText());
+				}
 				NhanVien nv = new NhanVien(Integer.valueOf(txtMaNhanVien.getText()),
 						   txtHoTen.getText(),
 						   Date.valueOf(txtNgaySinh.getText()),
 						   txtDiaChi.getText(),
 						   cbGender.getSelectedItem().toString(),
 						   txtLuong.getText(),
-						   Integer.valueOf(txtMaNQL.getText()),
+						   maNQL,
 						   Integer.valueOf(txtPhong.getText()),
 						   (ImageIcon)lblAvatar.getIcon());
 				if(flagThem) {
@@ -328,13 +335,14 @@ public class NhanVienForm extends JPanel {
 		ArrayList<NhanVien> nhanViens = NhanVienDAO.LayThongTinNhanVien();
 		try {
 			for (NhanVien nhanVien : nhanViens) {
+				String MaNQL = (nhanVien.getMaNQL() == 0) ? "" : String.valueOf(nhanVien.getMaNQL());
 				Object[] row = {nhanVien.getMaNhanVien(),
 								nhanVien.getHoTen(),
 								nhanVien.getNgaySinh(),
 								nhanVien.getDiaChi(),
 								nhanVien.getPhai(),
 								nhanVien.getLuong(),
-								nhanVien.getMaNQL(),
+								MaNQL,
 								nhanVien.getMaPB(),
 								nhanVien.getImage()};
 				tbModel.addRow(row);

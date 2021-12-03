@@ -5,15 +5,15 @@ import java.io.ByteArrayOutputStream;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.sql.CallableStatement;
 import java.util.ArrayList;
 
 import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
+import java.awt.Graphics;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.table.TableModel;
 
 import bean.NhanVien;
 import dbcontext.DBContext;
@@ -63,8 +63,15 @@ public class NhanVienDAO {
 		if (icon == null)
 			return null;
 		try {
+			BufferedImage bi = new BufferedImage(
+				    icon.getIconWidth(),
+				    icon.getIconHeight(),
+				    BufferedImage.TYPE_INT_RGB);
+			Graphics g = bi.createGraphics();
+			icon.paintIcon(null, g, 0,0);
+			g.dispose();
 		    ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		    ImageIO.write((RenderedImage) icon, "jpg", bos );
+		    ImageIO.write(bi, "jpg", bos );
 		    byte [] data = bos.toByteArray();
 		    return data;
 		} catch (Exception ex) {
@@ -82,7 +89,12 @@ public class NhanVienDAO {
 			statement.setString(4, nv.getDiaChi());
 			statement.setString(5, nv.getPhai());
 			statement.setString(6, nv.getLuong());
-			statement.setInt(7, nv.getMaNQL());
+			if(nv.getMaNQL() == 0) {
+				statement.setNull(7, Types.INTEGER);
+			}
+			else {
+				statement.setInt(7, nv.getMaNQL());
+			}
 			statement.setInt(8, nv.getMaPB());
 			statement.setBytes(9, ImageIconToByteArray(nv.getImage()));
 			statement.execute();
@@ -101,7 +113,12 @@ public class NhanVienDAO {
 			statement.setString(4, nv.getDiaChi());
 			statement.setString(5, nv.getPhai());
 			statement.setString(6, nv.getLuong());
-			statement.setInt(7, nv.getMaNQL());
+			if(nv.getMaNQL() == 0) {
+				statement.setNull(7, Types.INTEGER);
+			}
+			else {
+				statement.setInt(7, nv.getMaNQL());
+			}
 			statement.setInt(8, nv.getMaPB());
 			statement.setBytes(9, ImageIconToByteArray(nv.getImage()));
 			statement.execute();
@@ -123,20 +140,21 @@ public class NhanVienDAO {
 	}
 	public static boolean kiemTraThongTinDangNhap(String taiKhoan,String passWord)
 	{
-
 		try {
 			statement = connection.prepareCall("{call getTaiKhoanByID(?,?)}");
 			statement.setString(1, taiKhoan);
 			statement.setString(2, passWord);
 			ResultSet rs = statement.executeQuery();
 			if(rs.next()) {
-				rs.getString("TaiKhoan");
 				return true;
+			}
+			else {
+				return false;
 			}
 
 		} catch (SQLException err) {
-			System.out.print(err);
+			//System.out.print(err);
+			return false;
 		}
-		return false;
 	}
 }
