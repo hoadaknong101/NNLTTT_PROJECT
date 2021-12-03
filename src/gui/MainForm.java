@@ -17,16 +17,27 @@ import java.awt.Window.Type;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class MainForm {
+public class MainForm extends JFrame {
 	private NhanVienForm mStaffPanel;
 	private PhongBanForm mRoomPanel;
 	private DuAnForm mProjectPanel;
 	private JFrame frame;
-
+	private static MainForm frmMain=new MainForm();
+	JMenuItem mntmDangXuat = new JMenuItem("\u0110\u0103ng xu\u1EA5t");
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static synchronized MainForm getInstance(){
+        try {
+            if (frmMain == null) {
+            	frmMain = (MainForm) Class.forName("MainForm").newInstance();
+            }
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+            System.out.println(e.toString());
+        }
+        return frmMain;
+    }
+/*	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -38,7 +49,7 @@ public class MainForm {
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the application.
@@ -50,23 +61,39 @@ public class MainForm {
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	private void btnDangXuatActionPerformed(ActionEvent e)
+	{
+		if (JOptionPane.showConfirmDialog(mntmDangXuat, "Bạn muốn đăng xuất?", "Thông báo", 
+		        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+			LoginForm.getInstance().setVisible(true);
+			this.dispose();
+			}
+	}
 	private void initialize() {
-		frame = new JFrame();
+		/*frame = new JFrame();
 		frame.setType(Type.UTILITY);
 		frame.setBounds(100, 100, 1000, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
-		
+		frame.getContentPane().setLayout(null);*/
+		setLocationRelativeTo(null);
+		setResizable(false);
+		setBounds(100, 100, 1000, 700);
+		getContentPane().setLayout(null);
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBounds(0, 0, 986, 30);
 		menuBar.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		frame.getContentPane().add(menuBar);
+		getContentPane().add(menuBar);
 		
 		JMenu mnHeThong = new JMenu("H\u1EC7 th\u1ED1ng");
 		mnHeThong.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		menuBar.add(mnHeThong);
 		
-		JMenuItem mntmDangXuat = new JMenuItem("\u0110\u0103ng xu\u1EA5t");
+		
+		mntmDangXuat.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnDangXuatActionPerformed(e);
+			}
+		});
 		mntmDangXuat.setIcon(new ImageIcon(getClass().getResource("/images/icons8_Logout_32px.png")));
 		mntmDangXuat.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		mnHeThong.add(mntmDangXuat);
@@ -131,7 +158,7 @@ public class MainForm {
 		
 		JTabbedPane tpPane = new JTabbedPane(JTabbedPane.TOP);
 		tpPane.setBounds(10, 40, 966, 613);
-		frame.getContentPane().add(tpPane);
+		getContentPane().add(tpPane);
 		
 		JMenuItem mntmQuanLyNhanVien = new JMenuItem("Qu\u1EA3n L\u00FD Nh\u00E2n Vi\u00EAn");
 		mntmQuanLyNhanVien.addActionListener(new ActionListener() {

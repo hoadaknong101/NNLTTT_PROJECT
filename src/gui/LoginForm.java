@@ -14,27 +14,35 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
+
+import dao.NhanVienDAO;
+
 import java.awt.Window.Type;
 
-public class LoginForm {
+public class LoginForm extends JFrame {
 
 	private JFrame frame;
 	private JTextField txtUser;
 	private JPasswordField txtPassword;
-
+	private static LoginForm frmLogin = new LoginForm();
+	JButton btnDangNhap = new JButton("\u0110\u0103ng Nh\u1EADp");
+	public static synchronized LoginForm getInstance(){
+        try {
+            if (frmLogin == null) {
+            	frmLogin = (LoginForm) Class.forName("frmLogin").newInstance();
+            }
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+            System.out.println(e.toString());
+        }
+        return frmLogin;
+    }
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				try {
-					LoginForm window = new LoginForm();
-					window.frame.setVisible(true);
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				LoginForm.getInstance().setVisible(true);
 			}
 		});
 	}
@@ -51,16 +59,36 @@ public class LoginForm {
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	public boolean KiemTraThongTinDangNhap(String taiKhoan,String matKhau)
+	{
+		
+		return (NhanVienDAO.kiemTraThongTinDangNhap(taiKhoan, matKhau));
+	}
+	public void btnDangNhapActionPerformed(ActionEvent e)
+	{
+		String passText = new String(txtPassword.getPassword());
+		if(txtUser.getText().trim().isEmpty()||passText.isEmpty()) {
+			JOptionPane.showMessageDialog(btnDangNhap, "Vui lòng nhập đủ thông tin!");
+			return;
+		}
+		else if(KiemTraThongTinDangNhap(txtUser.getText(),passText)){
+			MainForm.getInstance().setVisible(true);
+			this.dispose();
+			}
+		else {
+			JOptionPane.showMessageDialog(btnDangNhap, "Sai thông tin đăng nhập!"+"\n"
+					+ "Xin vui lòng nhập lại");
+		}
+	}
 	private void initialize() {
-		frame = new JFrame();
-		frame.setType(Type.UTILITY);
-		frame.setBounds(100, 100, 608, 350);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		setType(Type.UTILITY);
+		setBounds(100, 100, 608, 350);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(211, 10, 374, 299);
-		frame.getContentPane().add(panel);
+		getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		txtUser = new JTextField();
@@ -68,6 +96,12 @@ public class LoginForm {
 		txtUser.setBounds(20, 50, 341, 30);
 		panel.add(txtUser);
 		txtUser.setColumns(10);
+		
+		txtPassword = new JPasswordField();
+		txtPassword.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		txtPassword.setBounds(20, 130, 341, 30);
+		
+		panel.add(txtPassword);
 		
 		JLabel lblNewLabel = new JLabel("T\u00EAn t\u00E0i kho\u1EA3n");
 		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 16));
@@ -79,18 +113,12 @@ public class LoginForm {
 		lblNewLabel_1.setBounds(20, 90, 144, 30);
 		panel.add(lblNewLabel_1);
 		
-		JButton btnDangNhap = new JButton("\u0110\u0103ng Nh\u1EADp");
+		
 		btnDangNhap.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String taiKhoan = txtUser.getText();
-				String matKhau = txtPassword.getSelectedText();
-				if(taiKhoan == "" || matKhau == "") {
-					JOptionPane.showMessageDialog(btnDangNhap, "Vui lòng nhập đủ thông tin!");
-					return;
-				}
-				if(taiKhoan == "admin" && matKhau == "admin") {
-					JOptionPane.showMessageDialog(btnDangNhap, "OK");
-				}
+				btnDangNhapActionPerformed(e);
+				txtUser.setText("");
+				txtPassword.setText("");
 			}
 		});
 		btnDangNhap.setIcon(new ImageIcon(getClass().getResource("/images/icons8_login_32px.png")));
@@ -112,15 +140,13 @@ public class LoginForm {
 		btnThoat.setBounds(202, 197, 145, 60);
 		panel.add(btnThoat);
 		
-		txtPassword = new JPasswordField();
-		txtPassword.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		txtPassword.setBounds(20, 130, 341, 30);
-		panel.add(txtPassword);
+		
+	
 		
 		JLabel lblIcon = new JLabel("");
 		lblIcon.setHorizontalAlignment(SwingConstants.CENTER);
 		lblIcon.setIcon(new ImageIcon(getClass().getResource("/images/icons8_staff_96px.png")));
 		lblIcon.setBounds(10, 10, 191, 271);
-		frame.getContentPane().add(lblIcon);
+		getContentPane().add(lblIcon);
 	}
 }

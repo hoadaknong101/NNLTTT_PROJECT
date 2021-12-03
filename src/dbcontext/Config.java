@@ -8,10 +8,10 @@ public class Config {
 //	protected public static String PASSWORD = "";
 	
 	// Phi
-	protected static String USERNAME = "root";
-	protected static String PASSWORD = "Phi!7042001";
+	//protected static String USERNAME = "root";
+	//protected static String PASSWORD = "Phi!7042001";
 
 	// Thang
-//	protected static String USERNAME = "root";
-//	protected static String PASSWORD = "";
+	protected static String USERNAME = "root";
+	protected static String PASSWORD = "1234";
 }

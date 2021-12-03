@@ -256,6 +256,7 @@ public class PhongBanForm extends JPanel {
 				model.addRow(row);
 			}
 		} catch (Exception e) {
+			System.out.print(e);
 			e.printStackTrace();
 		}
 		table.setModel(model);

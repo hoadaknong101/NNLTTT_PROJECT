@@ -13,6 +13,7 @@ import java.awt.image.RenderedImage;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.table.TableModel;
 
 import bean.NhanVien;
 import dbcontext.DBContext;
@@ -42,6 +43,7 @@ public class NhanVienDAO {
 			}
 			return danhSach;
 		} catch (SQLException err) {
+			System.out.print(err);
 			return null;
 		}
 	}
@@ -118,5 +120,23 @@ public class NhanVienDAO {
 		} catch (Exception e) {
 			return false;
 		}
+	}
+	public static boolean kiemTraThongTinDangNhap(String taiKhoan,String passWord)
+	{
+
+		try {
+			statement = connection.prepareCall("{call getTaiKhoanByID(?,?)}");
+			statement.setString(1, taiKhoan);
+			statement.setString(2, passWord);
+			ResultSet rs = statement.executeQuery();
+			if(rs.next()) {
+				rs.getString("TaiKhoan");
+				return true;
+			}
+
+		} catch (SQLException err) {
+			System.out.print(err);
+		}
+		return false;
 	}
 }

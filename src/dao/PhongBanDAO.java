@@ -31,6 +31,7 @@ public class PhongBanDAO {
 			}
 			return danhSach;
 		} catch (SQLException err) {
+			System.out.print(err);
 			return null;
 		}
 	}
