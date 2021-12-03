@@ -21,7 +21,6 @@ import dbcontext.DBContext;
 public class NhanVienDAO {
 	static Connection connection = DBContext.getConnection();
 	static Statement statement;
-	static NhanVien nhanVien;
 	
 	public NhanVienDAO() {}
 	
