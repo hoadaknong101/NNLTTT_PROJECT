@@ -2,15 +2,26 @@ package gui;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+
+import bean.PhongBan;
+import dao.PhongBanDAO;
+
 import javax.swing.JTable;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
+import java.sql.Date;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class PhongBanForm extends JPanel {
 	private JTextField txtMaPhongBan;
@@ -106,12 +117,43 @@ public class PhongBanForm extends JPanel {
 		panel.add(scrollPane);
 		
 		table = new JTable();
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int i = table.getSelectedRow();
+				txtMaPhongBan.setText(table.getValueAt(i, 0).toString());
+				txtTenPhongBan.setText(table.getValueAt(i, 1).toString());
+				if(table.getValueAt(i, 2) != null)
+					txtTruongPhong.setText(table.getValueAt(i, 2).toString());
+				else 
+					txtTruongPhong.setText("");
+				if(table.getValueAt(i, 3) != null)
+					txtNgayNhanChuc.setText(table.getValueAt(i, 3).toString());
+				else
+					txtNgayNhanChuc.setText("");
+				txtDiaDiem.setText(table.getValueAt(i, 4).toString());
+				EnableControl();
+			}
+		});
+		LoadData();
 		scrollPane.setViewportView(table);
 		
 		btnXoa = new JButton("X\u00F3a");
 		btnXoa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				int id = Integer.valueOf(txtMaPhongBan.getText());
+				if(JOptionPane.showConfirmDialog(btnXoa, "Bạn có chắc xóa thông tin phòng " + txtTenPhongBan.getText() + "?") == JOptionPane.YES_OPTION) {
+					if(PhongBanDAO.xoaPhongBan(id)) {
+						JOptionPane.showMessageDialog(btnXoa, "Xóa phòng ban thành công!");
+						LoadData();
+					}
+					else {
+						JOptionPane.showMessageDialog(btnXoa, "Không thể xóa thông tin!");
+					}
+				}
+				ClearContent();
+				DisableControl();
+				flagThem = false;
 			}
 		});
 		btnXoa.setIcon(new ImageIcon(getClass().getResource("/images/icons8_delete_32px.png")));
@@ -122,7 +164,36 @@ public class PhongBanForm extends JPanel {
 		btnLuu = new JButton("L\u01B0u");
 		btnLuu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				int truongPhong = (txtTruongPhong.getText().trim().isEmpty()) ? 0 : Integer.valueOf(txtTruongPhong.getText());
+				Date ngNhanChuc = (txtNgayNhanChuc.getText().trim().isEmpty()) ? null : Date.valueOf(txtNgayNhanChuc.getText());
+				PhongBan pb = new PhongBan(Integer.valueOf(txtMaPhongBan.getText()),
+						   txtTenPhongBan.getText(),
+						   truongPhong,
+						   ngNhanChuc,
+						   txtDiaDiem.getText());
+				if(flagThem) {
+					if(PhongBanDAO.themPhongBan(pb)) {
+						JOptionPane.showMessageDialog(btnLuu, "Đã thêm thông tin phòng ban mới!");
+						LoadData();
+					}
+					else {
+						JOptionPane.showMessageDialog(btnLuu, "Vui lòng kiểm tra lại thông tin!");
+						return;
+					}
+				}
+				else {
+					if(PhongBanDAO.suaPhongBan(pb)) {
+						JOptionPane.showMessageDialog(btnLuu, "Đã sửa thông tin phòng ban!");
+						LoadData();
+					}
+					else {
+						JOptionPane.showMessageDialog(btnLuu, "Vui lòng kiểm tra lại thông tin!");
+						return;
+					}
+				}
+				ClearContent();
+				DisableControl();
+				flagThem = false;
 			}
 		});
 		btnLuu.setIcon(new ImageIcon(getClass().getResource("/images/icons8_save_32px.png")));
@@ -133,7 +204,10 @@ public class PhongBanForm extends JPanel {
 		btnThem = new JButton("Th\u00EAm");
 		btnThem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				flagThem = true;
+				ClearContent();
+				EnableControl();
+				btnXoa.setEnabled(false);
 			}
 		});
 		btnThem.setIcon(new ImageIcon(getClass().getResource("/images/icons8_add_32px.png")));
@@ -144,7 +218,9 @@ public class PhongBanForm extends JPanel {
 		btnHuy = new JButton("H\u1EE7y");
 		btnHuy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				ClearContent();
+				DisableControl();
+				flagThem = false;
 			}
 		});
 		btnHuy.setIcon(new ImageIcon(getClass().getResource("/images/icons8_cancel_32px.png")));
@@ -167,7 +243,22 @@ public class PhongBanForm extends JPanel {
 	}
 	
 	private void LoadData() {
-		
+		String[] labels = {"Mã phòng ban", "Tên phòng ban", "Mã trưởng phòng", "Ngày nhận chức", "Địa điểm"};
+		DefaultTableModel model = new DefaultTableModel(labels, 0);
+		ArrayList<PhongBan> danhSach = PhongBanDAO.LayThongTinPhongBan();
+		try {
+			for(PhongBan pb : danhSach) {
+				Object[] row = {pb.getMaPhongBan(),
+								pb.getTenPhongBan(),
+								pb.getMaTruongPhong(),
+								pb.getNgayNhanChuc(),
+								pb.getDiaDiem()};
+				model.addRow(row);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		table.setModel(model);
 	}
 	
 	private void ClearContent() {

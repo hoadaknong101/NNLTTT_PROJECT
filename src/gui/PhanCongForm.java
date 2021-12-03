@@ -16,18 +16,20 @@ import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class PhanCongForm {
 
 	private JFrame frmBngPhnCng;
 	private JTextField txtThoiGian;
 	private JTextField txtTienThuong;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_4;
-	private JTextField textField_5;
+	private JTextField txtMaDa;
+	private JTextField txtMaNV;
+	private JTextField txtTenNV;
+	private JTextField txtTenDA;
+	private JTextField txtPhongDA;
+	private JTextField txtPhongNV;
 
 	/**
 	 * Launch the application.
@@ -81,23 +83,23 @@ public class PhanCongForm {
 		lblTinThng.setBounds(321, 14, 119, 17);
 		lblTinThng.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		
-		textField_2 = new JTextField();
-		textField_2.setForeground(Color.BLUE);
-		textField_2.setBounds(83, 81, 228, 20);
-		textField_2.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		textField_2.setColumns(10);
+		txtMaDa = new JTextField();
+		txtMaDa.setForeground(Color.BLUE);
+		txtMaDa.setBounds(83, 81, 228, 20);
+		txtMaDa.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		txtMaDa.setColumns(10);
 		
 		JLabel lblThngTinD = new JLabel("TH\u00D4NG TIN D\u1EF0 \u00C1N");
 		lblThngTinD.setForeground(Color.BLUE);
 		lblThngTinD.setHorizontalAlignment(SwingConstants.CENTER);
-		lblThngTinD.setBounds(10, 42, 271, 28);
+		lblThngTinD.setBounds(10, 42, 301, 28);
 		lblThngTinD.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		
-		textField_3 = new JTextField();
-		textField_3.setForeground(new Color(0, 128, 128));
-		textField_3.setBounds(394, 81, 228, 20);
-		textField_3.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		textField_3.setColumns(10);
+		txtMaNV = new JTextField();
+		txtMaNV.setForeground(new Color(0, 128, 128));
+		txtMaNV.setBounds(394, 81, 228, 20);
+		txtMaNV.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		txtMaNV.setColumns(10);
 		
 		JLabel lblThngTinNhn = new JLabel("TH\u00D4NG TIN NH\u00C2N VI\u00CAN");
 		lblThngTinNhn.setForeground(new Color(0, 128, 128));
@@ -109,9 +111,9 @@ public class PhanCongForm {
 		frmBngPhnCng.getContentPane().add(txtThoiGian);
 		frmBngPhnCng.getContentPane().add(txtTienThuong);
 		frmBngPhnCng.getContentPane().add(lblTinThng);
-		frmBngPhnCng.getContentPane().add(textField_2);
+		frmBngPhnCng.getContentPane().add(txtMaDa);
 		frmBngPhnCng.getContentPane().add(lblThngTinD);
-		frmBngPhnCng.getContentPane().add(textField_3);
+		frmBngPhnCng.getContentPane().add(txtMaNV);
 		frmBngPhnCng.getContentPane().add(lblThngTinNhn);
 		
 		JLabel lblMDa = new JLabel("M\u00E3 DA");
@@ -126,12 +128,12 @@ public class PhanCongForm {
 		lblMNv.setBounds(321, 83, 63, 17);
 		frmBngPhnCng.getContentPane().add(lblMNv);
 		
-		textField = new JTextField();
-		textField.setForeground(new Color(0, 128, 128));
-		textField.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		textField.setColumns(10);
-		textField.setBounds(394, 112, 228, 20);
-		frmBngPhnCng.getContentPane().add(textField);
+		txtTenNV = new JTextField();
+		txtTenNV.setForeground(new Color(0, 128, 128));
+		txtTenNV.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		txtTenNV.setColumns(10);
+		txtTenNV.setBounds(394, 112, 228, 20);
+		frmBngPhnCng.getContentPane().add(txtTenNV);
 		
 		JLabel lblTnDa = new JLabel("T\u00EAn DA");
 		lblTnDa.setForeground(Color.BLUE);
@@ -139,12 +141,12 @@ public class PhanCongForm {
 		lblTnDa.setBounds(10, 114, 63, 17);
 		frmBngPhnCng.getContentPane().add(lblTnDa);
 		
-		textField_1 = new JTextField();
-		textField_1.setForeground(Color.BLUE);
-		textField_1.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		textField_1.setColumns(10);
-		textField_1.setBounds(83, 112, 228, 20);
-		frmBngPhnCng.getContentPane().add(textField_1);
+		txtTenDA = new JTextField();
+		txtTenDA.setForeground(Color.BLUE);
+		txtTenDA.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		txtTenDA.setColumns(10);
+		txtTenDA.setBounds(83, 112, 228, 20);
+		frmBngPhnCng.getContentPane().add(txtTenDA);
 		
 		JLabel lblTnNv = new JLabel("T\u00EAn NV");
 		lblTnNv.setForeground(new Color(0, 128, 128));
@@ -153,21 +155,37 @@ public class PhanCongForm {
 		frmBngPhnCng.getContentPane().add(lblTnNv);
 		
 		JButton btnThem = new JButton("Th\u00EAm");
+		btnThem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnThem.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		btnThem.setBounds(46, 475, 101, 29);
 		frmBngPhnCng.getContentPane().add(btnThem);
 		
 		JButton btnLuu = new JButton("L\u01B0u");
+		btnLuu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnLuu.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		btnLuu.setBounds(193, 475, 101, 29);
 		frmBngPhnCng.getContentPane().add(btnLuu);
 		
 		JButton btnHuy = new JButton("H\u1EE7y");
+		btnHuy.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnHuy.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		btnHuy.setBounds(340, 475, 101, 29);
 		frmBngPhnCng.getContentPane().add(btnHuy);
 		
 		JButton btnXoa = new JButton("X\u00F3a");
+		btnXoa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnXoa.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		btnXoa.setBounds(487, 475, 101, 29);
 		frmBngPhnCng.getContentPane().add(btnXoa);
@@ -187,12 +205,12 @@ public class PhanCongForm {
 		lblTnDa_1.setBounds(10, 145, 156, 17);
 		frmBngPhnCng.getContentPane().add(lblTnDa_1);
 		
-		textField_4 = new JTextField();
-		textField_4.setForeground(Color.BLUE);
-		textField_4.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		textField_4.setColumns(10);
-		textField_4.setBounds(176, 143, 135, 20);
-		frmBngPhnCng.getContentPane().add(textField_4);
+		txtPhongDA = new JTextField();
+		txtPhongDA.setForeground(Color.BLUE);
+		txtPhongDA.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		txtPhongDA.setColumns(10);
+		txtPhongDA.setBounds(176, 143, 135, 20);
+		frmBngPhnCng.getContentPane().add(txtPhongDA);
 		
 		JLabel lblTnNv_1 = new JLabel("Ph\u00F2ng c\u1EE7a nh\u00E2n vi\u00EAn");
 		lblTnNv_1.setForeground(new Color(0, 128, 128));
@@ -200,11 +218,11 @@ public class PhanCongForm {
 		lblTnNv_1.setBounds(321, 145, 156, 17);
 		frmBngPhnCng.getContentPane().add(lblTnNv_1);
 		
-		textField_5 = new JTextField();
-		textField_5.setForeground(new Color(0, 128, 128));
-		textField_5.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		textField_5.setColumns(10);
-		textField_5.setBounds(487, 143, 135, 20);
-		frmBngPhnCng.getContentPane().add(textField_5);
+		txtPhongNV = new JTextField();
+		txtPhongNV.setForeground(new Color(0, 128, 128));
+		txtPhongNV.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		txtPhongNV.setColumns(10);
+		txtPhongNV.setBounds(487, 143, 135, 20);
+		frmBngPhnCng.getContentPane().add(txtPhongNV);
 	}
 }

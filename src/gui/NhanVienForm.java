@@ -251,6 +251,7 @@ public class NhanVienForm extends JPanel {
 					}
 					else {
 						JOptionPane.showMessageDialog(btnLuu, "Vui lòng kiểm tra lại thông tin!");
+						return;
 					}
 				}
 				else {
@@ -260,8 +261,10 @@ public class NhanVienForm extends JPanel {
 					}
 					else {
 						JOptionPane.showMessageDialog(btnLuu, "Vui lòng kiểm tra lại thông tin!");
+						return;
 					}
 				}
+				ClearContent();
 				DisableControl();
 				flagThem = false;
 			}
@@ -276,7 +279,7 @@ public class NhanVienForm extends JPanel {
 		btnXoa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int id = Integer.valueOf(txtMaNhanVien.getText());
-				if(JOptionPane.showConfirmDialog(btnXoa, "Bạn có chắc xóa thông tin nhân viên " + txtHoTen.getText() + "") == JOptionPane.YES_OPTION) {
+				if(JOptionPane.showConfirmDialog(btnXoa, "Bạn có chắc xóa thông tin nhân viên " + txtHoTen.getText() + "?") == JOptionPane.YES_OPTION) {
 					if(NhanVienDAO.xoaNhanVien(id)) {
 						JOptionPane.showMessageDialog(btnXoa, "Xóa nhân viên thành công!");
 						LoadData();
@@ -287,7 +290,6 @@ public class NhanVienForm extends JPanel {
 				}
 				ClearContent();
 				DisableControl();
-				LoadData();
 				flagThem = false;
 			}
 		});
@@ -323,8 +325,7 @@ public class NhanVienForm extends JPanel {
 	private void LoadData() {
 		String[] labels = {"Mã NV", "Họ tên", "Ngày sinh", "Địa chỉ", "Giới tính", "Lương", "Mã NQL", "Phòng", "Image"};
 		DefaultTableModel tbModel = new DefaultTableModel(labels, 0);
-		String sql = "select * from nhanvien";
-		ArrayList<NhanVien> nhanViens = NhanVienDAO.LayThongTinNhanVien(sql);
+		ArrayList<NhanVien> nhanViens = NhanVienDAO.LayThongTinNhanVien();
 		try {
 			for (NhanVien nhanVien : nhanViens) {
 				Object[] row = {nhanVien.getMaNhanVien(),

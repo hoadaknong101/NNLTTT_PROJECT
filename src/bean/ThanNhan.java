@@ -42,7 +42,7 @@ public class ThanNhan {
 		this.maNVTN = -1;
 	}
 	
-	public ThanNhan(String tenThanNhan, String phai, Date ngaySinh, String quanHe, int maNVTN) {
+	public ThanNhan(String tenThanNhan, int maNVTN, String phai, Date ngaySinh, String quanHe) {
 		this.tenThanNhan = tenThanNhan;
 		this.phai = phai;
 		this.ngaySinh = ngaySinh;

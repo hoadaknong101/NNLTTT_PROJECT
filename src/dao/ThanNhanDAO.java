@@ -3,40 +3,46 @@ package dao;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
+import java.sql.CallableStatement;
 
 import bean.ThanNhan;
 import dbcontext.DBContext;
 
 public class ThanNhanDAO {
 	static Connection connection = DBContext.getConnection();
-	static Statement statement;
+	static CallableStatement statement;
 	
 	public ThanNhanDAO() {}
 	
-	public static ArrayList<ThanNhan> LayThongTinThanNhan(String sql){
+	public static ArrayList<ThanNhan> LayThongTinThanNhan(){
 		try {
-			statement = connection.createStatement();
-			ResultSet rs = statement.executeQuery(sql);
+			statement = connection.prepareCall("{call getThanNhan}");
+			ResultSet rs = statement.executeQuery();
 			ArrayList<ThanNhan> danhSach = new ArrayList<ThanNhan>();
 			while(rs.next()) {
 				ThanNhan tn = new ThanNhan(rs.getString(1),
-											rs.getString(2),
-											rs.getDate(3),
-											rs.getString(4),
-											rs.getInt(5));
+											rs.getInt(2),
+											rs.getString(3),
+											rs.getDate(4),
+											rs.getString(5));
 				danhSach.add(tn);
 			}
 			return danhSach;
 		} catch (SQLException err) {
-			err.printStackTrace();
+			return null;
 		}
-		return null;
 	}
 	
 	public static boolean themThanNhan(ThanNhan tn) {
 		try {
+			statement = connection.prepareCall("{call insertThanNhan(?,?,?,?,?)}");
+			statement.setString(1, tn.getTenThanNhan());
+			statement.setInt(2, tn.getMaNVTN());
+			statement.setString(3, tn.getPhai());
+			statement.setDate(4, tn.getNgaySinh());
+			statement.setString(5, tn.getQuanHe());
+			statement.execute();
 			return true;
 		} catch (Exception e) {
 			return false;
@@ -45,14 +51,24 @@ public class ThanNhanDAO {
 	
 	public static boolean suaThanNhan(ThanNhan tn) {
 		try {
+			statement = connection.prepareCall("{call updateThanNhan(?,?,?,?,?)}");
+			statement.setString(1, tn.getTenThanNhan());
+			statement.setInt(2, tn.getMaNVTN());
+			statement.setString(3, tn.getPhai());
+			statement.setDate(4, tn.getNgaySinh());
+			statement.setString(5, tn.getQuanHe());
+			statement.execute();
 			return true;
 		} catch (Exception e) {
 			return false;
 		}
 	}
 	
-	public static boolean xoaThanNhan(int id) {
+	public static boolean xoaThanNhan(String tenTN) {
 		try {
+			statement = connection.prepareCall("{call deleteThanNhan(?)}");
+			statement.setString(1, tenTN);
+			statement.execute();
 			return true;
 		} catch (Exception e) {
 			return false;

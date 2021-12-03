@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.CallableStatement;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 import java.awt.image.BufferedImage;
@@ -20,14 +19,14 @@ import dbcontext.DBContext;
 
 public class NhanVienDAO {
 	static Connection connection = DBContext.getConnection();
-	static Statement statement;
+	static CallableStatement statement;
 	
 	public NhanVienDAO() {}
 	
-	public static ArrayList<NhanVien> LayThongTinNhanVien(String sql){
+	public static ArrayList<NhanVien> LayThongTinNhanVien(){
 		try {
-			statement = connection.createStatement();
-			ResultSet rs = statement.executeQuery(sql);
+			statement = connection.prepareCall("{call getNhanVien}");
+			ResultSet rs = statement.executeQuery();
 			ArrayList<NhanVien> danhSach = new ArrayList<NhanVien>();
 			while(rs.next()) {
 				NhanVien nv = new NhanVien(rs.getInt(1),
@@ -43,9 +42,8 @@ public class NhanVienDAO {
 			}
 			return danhSach;
 		} catch (SQLException err) {
-			err.printStackTrace();
+			return null;
 		}
-		return null;
 	}
 	
 	private static ImageIcon ByteArrayToImageIcon(byte[] data) {
@@ -75,7 +73,7 @@ public class NhanVienDAO {
 	
 	public static boolean themNhanVien(NhanVien nv) {
 		try {
-			CallableStatement statement = connection.prepareCall("{call insertNhanVien(?,?,?,?,?,?,?,?,?)}");
+			statement = connection.prepareCall("{call insertNhanVien(?,?,?,?,?,?,?,?,?)}");
 			statement.setInt(1, nv.getMaNhanVien());
 			statement.setString(2, nv.getHoTen());
 			statement.setDate(3, nv.getNgaySinh());
@@ -94,7 +92,7 @@ public class NhanVienDAO {
 	
 	public static boolean suaNhanVien(NhanVien nv) {
 		try {
-			CallableStatement statement = connection.prepareCall("{call updateNhanVien(?,?,?,?,?,?,?,?,?)}");
+			statement = connection.prepareCall("{call updateNhanVien(?,?,?,?,?,?,?,?,?)}");
 			statement.setInt(1, nv.getMaNhanVien());
 			statement.setString(2, nv.getHoTen());
 			statement.setDate(3, nv.getNgaySinh());
@@ -113,7 +111,7 @@ public class NhanVienDAO {
 
 	public static boolean xoaNhanVien(int id) {
 		try {
-			CallableStatement statement = connection.prepareCall("{call deleteNhanVien(?)}");
+			statement = connection.prepareCall("{call deleteNhanVien(?)}");
 			statement.setInt(1, id);
 			statement.execute();
 			return true;

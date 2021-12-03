@@ -1,5 +1,7 @@
 package gui;
 
+import java.awt.EventQueue;
+
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import java.awt.Font;
@@ -12,6 +14,8 @@ import javax.swing.JTabbedPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Window.Type;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class MainForm {
 	private NhanVienForm mStaffPanel;
@@ -22,19 +26,19 @@ public class MainForm {
 	/**
 	 * Launch the application.
 	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					MainForm window = new MainForm();
-//					window.frame.setLocationRelativeTo(null);
-//					window.frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					MainForm window = new MainForm();
+					window.frame.setLocationRelativeTo(null);
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
 	/**
 	 * Create the application.
@@ -88,6 +92,11 @@ public class MainForm {
 		menuBar.add(mnQuanLy);
 		
 		JMenuItem mntmPhanCong = new JMenuItem("Ph\u00E2n c\u00F4ng & L\u01B0\u01A1ng");
+		mntmPhanCong.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
 		mntmPhanCong.setIcon(new ImageIcon(getClass().getResource("/images/icons8_salary_male_32px.png")));
 		mntmPhanCong.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		mnQuanLy.add(mntmPhanCong);
@@ -97,6 +106,14 @@ public class MainForm {
 		menuBar.add(mnTroGiup);
 		
 		JMenuItem mntmThanhVien = new JMenuItem("Nhóm phát triển");
+		mntmThanhVien.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String DanhSachThanhVien = "19110365 - Phạm Đinh Quốc Hòa\n";
+				DanhSachThanhVien += "19110426 - Võ Nhật Phi\n";
+				DanhSachThanhVien += "19110436 - Phạm Văn Thắng";
+				JOptionPane.showMessageDialog(mntmThanhVien, DanhSachThanhVien);
+			}
+		});
 		mntmThanhVien.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		mnTroGiup.add(mntmThanhVien);
 		
@@ -104,6 +121,11 @@ public class MainForm {
 		mnTroGiup.add(separator_2);
 		
 		JMenuItem mntmCongTac = new JMenuItem("Cộng tác");
+		mntmCongTac.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showInputDialog("Nhập email của bạn để liên lạc với chúng tôi!");
+			}
+		});
 		mntmCongTac.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		mnTroGiup.add(mntmCongTac);
 		
