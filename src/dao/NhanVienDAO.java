@@ -157,4 +157,18 @@ public class NhanVienDAO {
 			return false;
 		}
 	}
+	public static boolean updateMatKhau(String taiKhoan,String passWord)
+	{
+		try {
+			statement = connection.prepareCall("{call updateTaiKhoan(?,?)}");
+			statement.setString(1, taiKhoan);
+			statement.setString(2, passWord);
+			statement.executeQuery();
+			return true;
+
+		} catch (SQLException err) {
+			//System.out.print(err);
+			return false;
+		}
+	}
 }

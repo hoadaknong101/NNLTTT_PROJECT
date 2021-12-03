@@ -18,21 +18,21 @@ public class MainForm extends JFrame {
 	private NhanVienForm mStaffPanel;
 	private PhongBanForm mRoomPanel;
 	private DuAnForm mProjectPanel;
-	private static MainForm frmMain=new MainForm();
+	private PhanCongVaLuongfrm mAssignmentPanel;
+	private static MainForm frmMain=null;
 	private static String taiKhoan;
-	
 	JMenuItem mntmDangXuat = new JMenuItem("\u0110\u0103ng xu\u1EA5t");
 	
 	/**
 	 * Launch the application.
 	 */
 	@SuppressWarnings("deprecation")
-	public static synchronized MainForm getInstance(){
+	public static synchronized MainForm getInstance(String tenTaiKhoan){
         try {
             if (frmMain == null) {
-            	frmMain = (MainForm) Class.forName("MainForm").newInstance();
+            	frmMain = new MainForm(tenTaiKhoan);
             }
-        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+        } catch (Exception e) {
             System.out.println(e.toString());
         }
         return frmMain;
@@ -55,7 +55,8 @@ public class MainForm extends JFrame {
 	/**
 	 * Create the application.
 	 */
-	public MainForm() {
+	public MainForm(String taiKhoan) {
+		this.taiKhoan=taiKhoan;
 		initialize();
 	}
 
@@ -103,7 +104,9 @@ public class MainForm extends JFrame {
 		mntmDoiMatKhau.setIcon(new ImageIcon(getClass().getResource("/images/password_32px.png")));
 		mntmDoiMatKhau.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				DoiMatKhaufrm frmDoiMatKhau=new DoiMatKhaufrm(taiKhoan);
+				frmDoiMatKhau.setLocationRelativeTo(null);
+				frmDoiMatKhau.setVisible(true);
 			}
 		});
 		mntmDoiMatKhau.setFont(new Font("Times New Roman", Font.BOLD, 16));
@@ -135,21 +138,15 @@ public class MainForm extends JFrame {
 		mnQuanLy.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		menuBar.add(mnQuanLy);
 		
-		JMenuItem mntmPhanCong = new JMenuItem("Ph\u00E2n c\u00F4ng & L\u01B0\u01A1ng");
-		mntmPhanCong.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-			}
-		});
-		mntmPhanCong.setIcon(new ImageIcon(getClass().getResource("/images/icons8_salary_male_32px.png")));
-		mntmPhanCong.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		mnQuanLy.add(mntmPhanCong);
+		
+		
 		
 		JMenu mnTroGiup = new JMenu("Tr\u1EE3 Gi\u00FAp");
 		mnTroGiup.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		menuBar.add(mnTroGiup);
 		
 		JMenuItem mntmThanhVien = new JMenuItem("Nhóm phát triển");
+		mntmThanhVien.setIcon(new ImageIcon(MainForm.class.getResource("/images/icons8_group_32px.png")));
 		mntmThanhVien.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String DanhSachThanhVien = "19110365 - Phạm Đinh Quốc Hòa\n";
@@ -165,6 +162,7 @@ public class MainForm extends JFrame {
 		mnTroGiup.add(separator_2);
 		
 		JMenuItem mntmCongTac = new JMenuItem("Cộng tác");
+		mntmCongTac.setIcon(new ImageIcon(MainForm.class.getResource("/images/icons8_email_send_32px.png")));
 		mntmCongTac.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showInputDialog("Nhập email của bạn để liên lạc với chúng tôi!");
@@ -190,9 +188,6 @@ public class MainForm extends JFrame {
 				
 				}
 		});
-		
-		JSeparator separator_5 = new JSeparator();
-		mnQuanLy.add(separator_5);
 		mntmQuanLyNhanVien.setIcon(new ImageIcon(getClass().getResource("/images/icons8_name_tag_32px.png")));
 		mntmQuanLyNhanVien.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		mnQuanLy.add(mntmQuanLyNhanVien);
@@ -233,13 +228,26 @@ public class MainForm extends JFrame {
 		mntmQuanLyDuAn.setIcon(new ImageIcon(getClass().getResource("/images/icons8_project_32px.png")));
 		mntmQuanLyDuAn.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		mnQuanLy.add(mntmQuanLyDuAn);
-	}
-
-	public String getTaiKhoan() {
-		return taiKhoan;
-	}
-
-	public void setTaiKhoan(String taiKhoan) {
-		MainForm.taiKhoan = taiKhoan;
+		
+		JMenuItem mntmPhanCong = new JMenuItem("Ph\u00E2n c\u00F4ng & L\u01B0\u01A1ng");
+		mntmPhanCong.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(mAssignmentPanel==null) {
+					mAssignmentPanel = new PhanCongVaLuongfrm();
+					//ImageIcon icon =new ImageIcon(getClass().getResource("edu/poly"))
+					tpPane.addTab("Quản Lý Phân Công",mAssignmentPanel);
+					tpPane.setSelectedComponent(mAssignmentPanel);
+				}
+				tpPane.setSelectedComponent(mAssignmentPanel);
+				
+				}
+			
+		});
+		
+		JSeparator separator_5 = new JSeparator();
+		mnQuanLy.add(separator_5);
+		mntmPhanCong.setIcon(new ImageIcon(getClass().getResource("/images/icons8_salary_male_32px.png")));
+		mntmPhanCong.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		mnQuanLy.add(mntmPhanCong);
 	}
 }

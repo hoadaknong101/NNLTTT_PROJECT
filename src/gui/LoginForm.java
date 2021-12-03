@@ -73,8 +73,7 @@ public class LoginForm extends JFrame {
 			return;
 		}
 		else if(KiemTraThongTinDangNhap(txtUser.getText(), passText)){
-			MainForm.getInstance().setTaiKhoan(txtUser.getText());
-			MainForm.getInstance().setVisible(true);
+			MainForm.getInstance(txtUser.getText()).setVisible(true);
 			this.dispose();
 		}
 		else {
