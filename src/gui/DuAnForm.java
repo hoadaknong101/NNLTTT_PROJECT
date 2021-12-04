@@ -134,6 +134,7 @@ public class DuAnForm extends JPanel {
 		add(btnThem);
 		
 		btnHuy = new JButton("H\u1EE7y");
+		btnHuy.setEnabled(false);
 		btnHuy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ClearContent();
@@ -147,6 +148,7 @@ public class DuAnForm extends JPanel {
 		add(btnHuy);
 		
 		btnXoa = new JButton("X\u00F3a");
+		btnXoa.setEnabled(false);
 		btnXoa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int id = Integer.valueOf(txtMaDuAn.getText());
@@ -170,6 +172,7 @@ public class DuAnForm extends JPanel {
 		add(btnXoa);
 		
 		btnLuu = new JButton("L\u01B0u");
+		btnLuu.setEnabled(false);
 		btnLuu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DuAn da = new DuAn(Integer.valueOf(txtMaDuAn.getText()),

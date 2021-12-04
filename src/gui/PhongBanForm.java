@@ -140,6 +140,7 @@ public class PhongBanForm extends JPanel {
 		scrollPane.setViewportView(table);
 		
 		btnXoa = new JButton("X\u00F3a");
+		btnXoa.setEnabled(false);
 		btnXoa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int id = Integer.valueOf(txtMaPhongBan.getText());
@@ -163,6 +164,7 @@ public class PhongBanForm extends JPanel {
 		add(btnXoa);
 		
 		btnLuu = new JButton("L\u01B0u");
+		btnLuu.setEnabled(false);
 		btnLuu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int truongPhong = (txtTruongPhong.getText().trim().isEmpty()) ? 0 : Integer.valueOf(txtTruongPhong.getText());
@@ -217,6 +219,7 @@ public class PhongBanForm extends JPanel {
 		add(btnThem);
 		
 		btnHuy = new JButton("H\u1EE7y");
+		btnHuy.setEnabled(false);
 		btnHuy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ClearContent();
@@ -258,7 +261,6 @@ public class PhongBanForm extends JPanel {
 				model.addRow(row);
 			}
 		} catch (Exception e) {
-			System.out.print(e);
 			e.printStackTrace();
 		}
 		table.setModel(model);

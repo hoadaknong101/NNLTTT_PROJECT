@@ -224,7 +224,7 @@ public class MainForm extends JFrame {
 					tpPane.addTab("Thông tin thân nhân",mRelativePanel);
 					tpPane.setSelectedComponent(mRelativePanel);
 				}
-				tpPane.setSelectedComponent(mAssignmentPanel);
+				tpPane.setSelectedComponent(mRelativePanel);
 			}
 		});
 		mntmNewMenuItem.setIcon(new ImageIcon(MainForm.class.getResource("/images/family_32px.png")));

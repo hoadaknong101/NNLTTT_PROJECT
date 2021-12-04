@@ -2,6 +2,8 @@ package gui;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
@@ -11,6 +13,17 @@ import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import java.awt.Color;
 import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
+
+import bean.PhanCong;
+import dao.PhanCongDAO;
+
+import java.awt.event.ActionListener;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class PhanCongVaLuongForm extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -22,7 +35,12 @@ public class PhanCongVaLuongForm extends JPanel {
 	private JTextField txtPhongCuaNhanVien;
 	private JTextField txtTenNhanVien;
 	private JTextField txtMaNhanVien;
-	private JTable table;
+	private static JTable table;
+	private JButton btnThem;
+	private JButton btnLuu;
+	private JButton btnHuy;
+	private JButton btnXoa;
+	private boolean flagThem = false;
 
 	/**
 	 * Create the panel.
@@ -151,25 +169,92 @@ public class PhanCongVaLuongForm extends JPanel {
 		txtPhongTrienKhai.setBounds(172, 134, 231, 30);
 		panel_1_1.add(txtPhongTrienKhai);
 		
-		JButton btnThem = new JButton("Thêm");
+		btnThem = new JButton("Thêm");
+		btnThem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				flagThem = true;
+				ClearContent();
+				EnableControl();
+				btnXoa.setEnabled(false);
+			}
+		});
 		btnThem.setIcon(new ImageIcon(PhanCongVaLuongForm.class.getResource("/images/icons8_add_32px.png")));
 		btnThem.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		btnThem.setBounds(101, 526, 115, 50);
 		add(btnThem);
 		
-		JButton btnHuy = new JButton("Hủy");
+		btnHuy = new JButton("Hủy");
+		btnHuy.setEnabled(false);
+		btnHuy.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ClearContent();
+				DisableControl();
+				flagThem = false;
+			}
+		});
 		btnHuy.setIcon(new ImageIcon(PhanCongVaLuongForm.class.getResource("/images/icons8_cancel_32px.png")));
 		btnHuy.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		btnHuy.setBounds(317, 526, 115, 50);
 		add(btnHuy);
 		
-		JButton btnLuu = new JButton("Lưu");
+		btnLuu = new JButton("Lưu");
+		btnLuu.setEnabled(false);
+		btnLuu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PhanCong pc = new PhanCong(Integer.valueOf(txtMaDuAn.getText()), 
+						   				   Integer.valueOf(txtMaNhanVien.getText()),
+						   				   Date.valueOf(txtThoiGian.getText()),
+						   				   Integer.valueOf(txtTienThuong.getText()));
+				if(flagThem) {
+					if(PhanCongDAO.themPhanCong(pc)) {
+						JOptionPane.showMessageDialog(btnLuu, "Đã thêm tạo phân công mới!");
+						LoadData();
+					}
+					else {
+						JOptionPane.showMessageDialog(btnLuu, "Vui lòng kiểm tra lại thông tin!");
+						return;
+					}
+				}
+				else {
+					if(PhanCongDAO.suaPhanCong(pc)) {
+						JOptionPane.showMessageDialog(btnLuu, "Đã sửa thông tin phân công!");
+						LoadData();
+					}
+					else {
+						JOptionPane.showMessageDialog(btnLuu, "Vui lòng kiểm tra lại thông tin!");
+						return;
+					}
+				}
+				ClearContent();
+				DisableControl();
+				flagThem = false;
+			}
+		});
 		btnLuu.setIcon(new ImageIcon(PhanCongVaLuongForm.class.getResource("/images/icons8_save_32px.png")));
 		btnLuu.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		btnLuu.setBounds(533, 526, 115, 50);
 		add(btnLuu);
 		
-		JButton btnXoa = new JButton("Xóa");
+		btnXoa = new JButton("Xóa");
+		btnXoa.setEnabled(false);
+		btnXoa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(JOptionPane.showConfirmDialog(btnXoa, "Bạn có chắc xóa nhân viên " + txtTenNhanVien.getText() +
+						" ra khỏi dự án " + txtTenDuAn.getText() + "?") == JOptionPane.YES_OPTION) {
+					if(PhanCongDAO.xoaPhanCong(Integer.valueOf(txtMaDuAn.getText()), 
+											   Integer.valueOf(txtMaNhanVien.getText()))) {
+						JOptionPane.showMessageDialog(btnXoa, "Xóa thông tin thành công!");
+						LoadData();
+					}
+					else {
+						JOptionPane.showMessageDialog(btnXoa, "Không thể xóa thông tin!");
+					}
+				}
+				ClearContent();
+				DisableControl();
+				flagThem = false;
+			}
+		});
 		btnXoa.setIcon(new ImageIcon(PhanCongVaLuongForm.class.getResource("/images/icons8_delete_32px.png")));
 		btnXoa.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		btnXoa.setBounds(749, 526, 115, 50);
@@ -185,6 +270,75 @@ public class PhanCongVaLuongForm extends JPanel {
 		panel.add(scrollPane);
 		
 		table = new JTable();
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int i = table.getSelectedRow();
+				LoadDataToComponent(Integer.valueOf(table.getValueAt(i, 0).toString()),
+									Integer.valueOf(table.getValueAt(i, 1).toString()));
+			}
+		});
+		LoadData();
 		scrollPane.setColumnHeaderView(table);
+	}
+	
+	private void LoadDataToComponent(int maNVPC, int maDa) {
+		Object[] datas = PhanCongDAO.layThongTinChiTiet(maNVPC, maDa);
+		if(datas != null) {
+			txtMaNhanVien.setText(datas[0].toString());
+			txtMaDuAn.setText(datas[1].toString());
+			txtThoiGian.setText(datas[2].toString());
+			txtTienThuong.setText(datas[3].toString());
+			txtTenDuAn.setText(datas[4].toString());
+			txtPhongTrienKhai.setText(datas[5].toString());
+			txtTenNhanVien.setText(datas[6].toString());
+			if(datas[7] == null) {
+				txtPhongCuaNhanVien.setText("");
+			}
+			else {
+				txtPhongCuaNhanVien.setText(datas[7].toString());
+			}
+		}
+	}
+	
+	private static void LoadData() {
+		String[] labels = {"Mã nhân viên", "Mã dự án", "Ngày bắt đầu", "Tiền thưởng"};
+		DefaultTableModel model = new DefaultTableModel(labels, 0);
+		ArrayList<PhanCong> danhSach = PhanCongDAO.LayThongTinPhanCong();
+		try {
+			for(PhanCong pc : danhSach) {
+				Object[] row = {pc.getMaNhanVienPhanCong(),
+								pc.getMaDuAn(),
+								pc.getThoiGian(),
+								pc.getTienThuong()};
+				model.addRow(row);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		table.setModel(model);
+	}
+	
+	private void ClearContent() {
+		txtMaDuAn.setText("");
+		txtMaNhanVien.setText("");
+		txtPhongCuaNhanVien.setText("");
+		txtPhongTrienKhai.setText("");
+		txtTenDuAn.setText("");
+		txtTenNhanVien.setText("");
+		txtThoiGian.setText("");
+		txtTienThuong.setText("");
+	}
+	
+	private void EnableControl() {
+		btnLuu.setEnabled(true);
+		btnHuy.setEnabled(true);
+		btnXoa.setEnabled(true);
+	}
+	
+	private void DisableControl() {
+		btnLuu.setEnabled(false);
+		btnHuy.setEnabled(false);
+		btnXoa.setEnabled(false);
 	}
 }

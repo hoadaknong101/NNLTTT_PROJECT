@@ -2,7 +2,6 @@ package dao;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
@@ -14,6 +13,7 @@ import dbcontext.DBContext;
 public class PhanCongDAO {
 	static Connection connection = DBContext.getConnection();
 	static CallableStatement statement;
+	private static Object[] datas;
 	
 	public PhanCongDAO() {}
 	
@@ -83,5 +83,28 @@ public class PhanCongDAO {
 		} catch (Exception e) {
 			return false;
 		}
+	}
+	
+	public static Object[] layThongTinChiTiet(int maNV, int maDA){
+		datas = new Object[8];
+		try {
+			statement = connection.prepareCall("{call getThongTinPhanCongChiTiet(?, ?)}");
+			statement.setInt(1, maNV);
+			statement.setInt(2, maDA);
+			ResultSet rs = statement.executeQuery();
+			if(rs.next()) {
+				datas[0] = rs.getObject(1);
+				datas[1] = rs.getObject(2);
+				datas[2] = rs.getObject(3);
+				datas[3] = rs.getObject(4);
+				datas[4] = rs.getObject(5);
+				datas[5] = rs.getObject(6);
+				datas[6] = rs.getObject(7);
+				datas[7] = rs.getObject(8);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return datas;
 	}
 }
