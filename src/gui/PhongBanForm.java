@@ -24,6 +24,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class PhongBanForm extends JPanel {
+	private static final long serialVersionUID = 1L;
 	private JTextField txtMaPhongBan;
 	private JTextField txtTenPhongBan;
 	private JTextField txtTruongPhong;
@@ -57,7 +58,7 @@ public class PhongBanForm extends JPanel {
 		add(lblMPhngBan);
 		
 		txtMaPhongBan = new JTextField();
-		txtMaPhongBan.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+		txtMaPhongBan.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		txtMaPhongBan.setColumns(10);
 		txtMaPhongBan.setBounds(133, 71, 129, 30);
 		add(txtMaPhongBan);
@@ -68,13 +69,13 @@ public class PhongBanForm extends JPanel {
 		add(lblTnPhngBan);
 		
 		txtTenPhongBan = new JTextField();
-		txtTenPhongBan.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+		txtTenPhongBan.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		txtTenPhongBan.setColumns(10);
 		txtTenPhongBan.setBounds(427, 71, 181, 30);
 		add(txtTenPhongBan);
 		
 		txtTruongPhong = new JTextField();
-		txtTruongPhong.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+		txtTruongPhong.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		txtTruongPhong.setColumns(10);
 		txtTruongPhong.setBounds(133, 111, 475, 30);
 		add(txtTruongPhong);
@@ -91,7 +92,7 @@ public class PhongBanForm extends JPanel {
 		
 		txtNgayNhanChuc = new JTextField();
 		txtNgayNhanChuc.setToolTipText("\u0110\u1ECBnh d\u1EA1ng: YYYY-MM-DD");
-		txtNgayNhanChuc.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+		txtNgayNhanChuc.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		txtNgayNhanChuc.setColumns(10);
 		txtNgayNhanChuc.setBounds(133, 153, 475, 30);
 		add(txtNgayNhanChuc);
@@ -102,7 +103,7 @@ public class PhongBanForm extends JPanel {
 		add(lblaim);
 		
 		txtDiaDiem = new JTextField();
-		txtDiaDiem.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+		txtDiaDiem.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		txtDiaDiem.setColumns(10);
 		txtDiaDiem.setBounds(133, 193, 475, 30);
 		add(txtDiaDiem);

@@ -1,7 +1,5 @@
 package gui;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -17,9 +15,8 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class DoiMatKhaufrm extends JFrame {
-
-	private JFrame frame;
+public class DoiMatKhauForm extends JFrame {
+	private static final long serialVersionUID = 1L;
 	private JTextField txtTaiKhoan;
 	private JTextField txtMatKhauCu;
 	private JTextField txtMatKhauMoi;
@@ -27,19 +24,9 @@ public class DoiMatKhaufrm extends JFrame {
 	private String tenTaiKhoan;
 
 	/**
-	 * Launch the application.
-	 */
-	/*
-	 * public static void main(String[] args) { EventQueue.invokeLater(new
-	 * Runnable() { public void run() { try { DoiMauKhaufrm window = new
-	 * DoiMauKhaufrm(); window.frame.setVisible(true); } catch (Exception e) {
-	 * e.printStackTrace(); } } }); }
-	 */
-
-	/**
 	 * Create the application.
 	 */
-	public DoiMatKhaufrm(String taiKhoan) {
+	public DoiMatKhauForm(String taiKhoan) {
 		this.tenTaiKhoan = taiKhoan;
 		initialize();
 	}
@@ -111,14 +98,13 @@ public class DoiMatKhaufrm extends JFrame {
 					if (txtMatKhauMoi.getText().equals(txtXacNhan.getText())) {
 						if (NhanVienDAO.updateMatKhau(txtTaiKhoan.getText(), txtMatKhauMoi.getText())) {
 							JOptionPane.showMessageDialog(btnLuu, "Đổi mật khẩu thành công!");
-							
 						}
 					}
 					else {
 						JOptionPane.showMessageDialog(btnLuu, "Mật khẩu xác nhận không trùng khớp!");
-						
 					}
-				} else {
+				} 
+				else {
 					JOptionPane.showMessageDialog(btnLuu, "Mật khẩu cũ không đúng!");
 				}
 

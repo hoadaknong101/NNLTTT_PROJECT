@@ -18,13 +18,14 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class NhanVienForm extends JPanel {
+	private static final long serialVersionUID = 1L;
 	private JTextField txtMaNhanVien;
+	private JTextField txtPhong;
 	private JTextField txtHoTen;
 	private JTextField txtNgaySinh;
+	private JTextField txtMaNQL;
 	private JTextField txtDiaChi;
 	private JTextField txtLuong;
-	private JTextField txtMaNQL;
-	private JTextField txtPhong;
 	private JLabel lblAvatar;
 	private JTable table;
 	private JScrollPane scrollPane;
@@ -85,31 +86,37 @@ public class NhanVienForm extends JPanel {
 		add(lblMNgiQun);
 		
 		txtMaNhanVien = new JTextField();
+		txtMaNhanVien.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		txtMaNhanVien.setBounds(166, 75, 181, 30);
 		add(txtMaNhanVien);
 		txtMaNhanVien.setColumns(10);
 		
 		txtHoTen = new JTextField();
+		txtHoTen.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		txtHoTen.setColumns(10);
 		txtHoTen.setBounds(166, 113, 500, 30);
 		add(txtHoTen);
 		
 		txtNgaySinh = new JTextField();
+		txtNgaySinh.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		txtNgaySinh.setColumns(10);
 		txtNgaySinh.setBounds(166, 153, 181, 30);
 		add(txtNgaySinh);
 		
 		txtDiaChi = new JTextField();
+		txtDiaChi.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		txtDiaChi.setColumns(10);
 		txtDiaChi.setBounds(166, 193, 500, 30);
 		add(txtDiaChi);
 		
 		txtLuong = new JTextField();
+		txtLuong.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		txtLuong.setColumns(10);
 		txtLuong.setBounds(166, 273, 500, 30);
 		add(txtLuong);
 		
 		txtMaNQL = new JTextField();
+		txtMaNQL.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		txtMaNQL.setColumns(10);
 		txtMaNQL.setBounds(495, 153, 171, 30);
 		add(txtMaNQL);
@@ -120,6 +127,7 @@ public class NhanVienForm extends JPanel {
 		add(lblPhng);
 		
 		txtPhong = new JTextField();
+		txtPhong.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		txtPhong.setColumns(10);
 		txtPhong.setBounds(495, 75, 171, 30);
 		add(txtPhong);
@@ -139,7 +147,6 @@ public class NhanVienForm extends JPanel {
 				try {
 					File ftenanh = f.getSelectedFile();
 					String path = ftenanh.getAbsolutePath();
-					//System.out.print(path);
 					if (path != "") {
 						BufferedImage img = ImageIO.read(ftenanh);
 						Image dimg = img.getScaledInstance(lblAvatar.getWidth(), lblAvatar.getHeight(),
@@ -166,10 +173,11 @@ public class NhanVienForm extends JPanel {
 		panel_1.setLayout(null);
 		
 		JComboBox<String> cbGender = new JComboBox<String>();
+		cbGender.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		cbGender.addItem("nam");
 		cbGender.addItem("nu");
 		cbGender.addItem("khac");
-		cbGender.setBounds(166, 238, 181, 22);
+		cbGender.setBounds(166, 235, 181, 27);
 		add(cbGender);
 		
 		scrollPane = new JScrollPane();

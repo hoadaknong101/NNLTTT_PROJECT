@@ -18,7 +18,7 @@ import javax.swing.SwingConstants;
 import dao.NhanVienDAO;
 
 public class LoginForm extends JFrame {
-
+	private static final long serialVersionUID = 1L;
 	private JTextField txtUser;
 	private JPasswordField txtPassword;
 	private static LoginForm frmLogin = new LoginForm();
@@ -36,9 +36,6 @@ public class LoginForm extends JFrame {
         return frmLogin;
     }
 	
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -47,18 +44,10 @@ public class LoginForm extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the application.
-	 */
 	public LoginForm() {
-		
 		initialize();
-		
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	public boolean KiemTraThongTinDangNhap(String taiKhoan,String matKhau)
 	{
 		return NhanVienDAO.kiemTraThongTinDangNhap(taiKhoan, matKhau);

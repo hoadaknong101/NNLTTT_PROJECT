@@ -12,7 +12,8 @@ import javax.swing.JScrollPane;
 import java.awt.Color;
 import javax.swing.UIManager;
 
-public class PhanCongVaLuongfrm extends JPanel {
+public class PhanCongVaLuongForm extends JPanel {
+	private static final long serialVersionUID = 1L;
 	private JTextField txtThoiGian;
 	private JTextField txtTienThuong;
 	private JTextField txtMaDuAn;
@@ -26,7 +27,7 @@ public class PhanCongVaLuongfrm extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PhanCongVaLuongfrm() {
+	public PhanCongVaLuongForm() {
 		setLayout(null);
 		
 		JLabel lblQunLPhn = new JLabel("Qu\u1EA3n L\u00FD Ph\u00E2n C\u00F4ng V\u00E0 L\u01B0\u01A1ng");
@@ -44,6 +45,7 @@ public class PhanCongVaLuongfrm extends JPanel {
 		add(lblThiGian);
 		
 		txtThoiGian = new JTextField();
+		txtThoiGian.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		txtThoiGian.setColumns(10);
 		txtThoiGian.setBounds(118, 75, 231, 30);
 		add(txtThoiGian);
@@ -54,6 +56,7 @@ public class PhanCongVaLuongfrm extends JPanel {
 		add(lblThi);
 		
 		txtTienThuong = new JTextField();
+		txtTienThuong.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		txtTienThuong.setColumns(10);
 		txtTienThuong.setBounds(620, 73, 290, 30);
 		add(txtTienThuong);
@@ -70,16 +73,19 @@ public class PhanCongVaLuongfrm extends JPanel {
 		panel_1.add(lblThngTinNhn);
 		
 		txtPhongCuaNhanVien = new JTextField();
+		txtPhongCuaNhanVien.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		txtPhongCuaNhanVien.setColumns(10);
 		txtPhongCuaNhanVien.setBounds(172, 134, 231, 30);
 		panel_1.add(txtPhongCuaNhanVien);
 		
 		txtTenNhanVien = new JTextField();
+		txtTenNhanVien.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		txtTenNhanVien.setColumns(10);
 		txtTenNhanVien.setBounds(172, 94, 231, 30);
 		panel_1.add(txtTenNhanVien);
 		
 		txtMaNhanVien = new JTextField();
+		txtMaNhanVien.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		txtMaNhanVien.setColumns(10);
 		txtMaNhanVien.setBounds(172, 52, 231, 30);
 		panel_1.add(txtMaNhanVien);
@@ -113,6 +119,7 @@ public class PhanCongVaLuongfrm extends JPanel {
 		panel_1_1.add(lblThngTinD);
 		
 		txtMaDuAn = new JTextField();
+		txtMaDuAn.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		txtMaDuAn.setColumns(10);
 		txtMaDuAn.setBounds(172, 52, 231, 30);
 		panel_1_1.add(txtMaDuAn);
@@ -128,6 +135,7 @@ public class PhanCongVaLuongfrm extends JPanel {
 		panel_1_1.add(lblThiGian_1_1);
 		
 		txtTenDuAn = new JTextField();
+		txtTenDuAn.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		txtTenDuAn.setColumns(10);
 		txtTenDuAn.setBounds(172, 94, 231, 30);
 		panel_1_1.add(txtTenDuAn);
@@ -138,30 +146,31 @@ public class PhanCongVaLuongfrm extends JPanel {
 		panel_1_1.add(lblThiGian_1_2);
 		
 		txtPhongTrienKhai = new JTextField();
+		txtPhongTrienKhai.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		txtPhongTrienKhai.setColumns(10);
 		txtPhongTrienKhai.setBounds(172, 134, 231, 30);
 		panel_1_1.add(txtPhongTrienKhai);
 		
 		JButton btnThem = new JButton("Thêm");
-		btnThem.setIcon(new ImageIcon(PhanCongVaLuongfrm.class.getResource("/images/icons8_add_32px.png")));
+		btnThem.setIcon(new ImageIcon(PhanCongVaLuongForm.class.getResource("/images/icons8_add_32px.png")));
 		btnThem.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		btnThem.setBounds(101, 526, 115, 50);
 		add(btnThem);
 		
 		JButton btnHuy = new JButton("Hủy");
-		btnHuy.setIcon(new ImageIcon(PhanCongVaLuongfrm.class.getResource("/images/icons8_cancel_32px.png")));
+		btnHuy.setIcon(new ImageIcon(PhanCongVaLuongForm.class.getResource("/images/icons8_cancel_32px.png")));
 		btnHuy.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		btnHuy.setBounds(317, 526, 115, 50);
 		add(btnHuy);
 		
 		JButton btnLuu = new JButton("Lưu");
-		btnLuu.setIcon(new ImageIcon(PhanCongVaLuongfrm.class.getResource("/images/icons8_save_32px.png")));
+		btnLuu.setIcon(new ImageIcon(PhanCongVaLuongForm.class.getResource("/images/icons8_save_32px.png")));
 		btnLuu.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		btnLuu.setBounds(533, 526, 115, 50);
 		add(btnLuu);
 		
 		JButton btnXoa = new JButton("Xóa");
-		btnXoa.setIcon(new ImageIcon(PhanCongVaLuongfrm.class.getResource("/images/icons8_delete_32px.png")));
+		btnXoa.setIcon(new ImageIcon(PhanCongVaLuongForm.class.getResource("/images/icons8_delete_32px.png")));
 		btnXoa.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		btnXoa.setBounds(749, 526, 115, 50);
 		add(btnXoa);
@@ -177,6 +186,5 @@ public class PhanCongVaLuongfrm extends JPanel {
 		
 		table = new JTable();
 		scrollPane.setColumnHeaderView(table);
-
 	}
 }

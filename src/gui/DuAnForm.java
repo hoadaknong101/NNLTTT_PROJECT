@@ -23,6 +23,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class DuAnForm extends JPanel {
+	private static final long serialVersionUID = 1L;
 	private JTextField txtMaDuAn;
 	private JTextField txtTenDuAn;
 	private JTextField txtDiaDiem;
@@ -80,6 +81,7 @@ public class DuAnForm extends JPanel {
 		add(lblMDn);
 		
 		txtMaDuAn = new JTextField();
+		txtMaDuAn.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		txtMaDuAn.setBounds(118, 75, 129, 30);
 		txtMaDuAn.setColumns(10);
 		add(txtMaDuAn);
@@ -90,6 +92,7 @@ public class DuAnForm extends JPanel {
 		add(lblTnDn);
 		
 		txtTenDuAn = new JTextField();
+		txtTenDuAn.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		txtTenDuAn.setBounds(383, 75, 251, 30);
 		txtTenDuAn.setColumns(10);
 		add(txtTenDuAn);
@@ -100,6 +103,7 @@ public class DuAnForm extends JPanel {
 		add(lblaim);
 		
 		txtDiaDiem = new JTextField();
+		txtDiaDiem.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		txtDiaDiem.setBounds(118, 115, 516, 30);
 		txtDiaDiem.setColumns(10);
 		add(txtDiaDiem);
@@ -110,6 +114,7 @@ public class DuAnForm extends JPanel {
 		add(lblPhng);
 		
 		txtPhong = new JTextField();
+		txtPhong.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		txtPhong.setBounds(118, 155, 516, 30);
 		txtPhong.setColumns(10);
 		add(txtPhong);

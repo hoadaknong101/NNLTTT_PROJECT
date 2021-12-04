@@ -1,0 +1,33 @@
+JRE System Library: JavaSE-15
+csdl: mySQL
+thư viện kết nối: mysql-connector-java-8.0.13.jar
+
+tên database: congty
+
+bean: chức các đối tượng
+	- DuAn
+	- NhanVien
+	- PhanCong
+	- PhongBan
+	- ThanNhan
+
+dbcontext: chứa thông tin csdl kết nối
+	- Config : thông tin data, username, password
+	- MySQLConnection: thiết lập kết nối với mySQL
+	- DBContext: tạo kết nối
+	
+dao: sử dụng để thực thi các lệnh, truy vấn (select, thêm, sửa, xóa)
+	- DuAnDAO
+	- NhanVienDAO
+	- PhanCongDAO
+	- PhongBanDAO
+	- ThanNhanDAO
+	
+gui: giao diện chính của chương trình
+	- DoiMatKhauForm
+	- DuAnForm
+	- LoginForm (khởi động)
+	- MainForm (giao diện chính)
+	- NhanVienForm
+	- PhanCongVaLuongForm
+	- ThanNhanForm
