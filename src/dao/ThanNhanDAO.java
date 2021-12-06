@@ -34,6 +34,26 @@ public class ThanNhanDAO {
 		}
 	}
 	
+	public static ArrayList<ThanNhan> LayThongTinThanNhan(int MaNVTN){
+		try {
+			statement = connection.prepareCall("{call getThanNhanTheoIDNV(?)}");
+			statement.setInt(1, MaNVTN);
+			ResultSet rs = statement.executeQuery();
+			ArrayList<ThanNhan> danhSach = new ArrayList<ThanNhan>();
+			while(rs.next()) {
+				ThanNhan tn = new ThanNhan(rs.getString(1),
+											rs.getInt(2),
+											rs.getString(3),
+											rs.getDate(4),
+											rs.getString(5));
+				danhSach.add(tn);
+			}
+			return danhSach;
+		} catch (SQLException err) {
+			return null;
+		}
+	}
+	
 	public static boolean themThanNhan(ThanNhan tn) {
 		try {
 			statement = connection.prepareCall("{call insertThanNhan(?,?,?,?,?)}");

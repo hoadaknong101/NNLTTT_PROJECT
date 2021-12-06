@@ -59,46 +59,46 @@ public class ThanNhanForm extends JPanel {
 		
 		JLabel lblThiGian_1_1 = new JLabel("M\u00E3 nh\u00E2n vi\u00EAn");
 		lblThiGian_1_1.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		lblThiGian_1_1.setBounds(10, 118, 113, 30);
+		lblThiGian_1_1.setBounds(10, 124, 113, 30);
 		add(lblThiGian_1_1);
 		
 		JLabel lblThiGian_1_2 = new JLabel("Gi\u1EDBi t\u00EDnh");
 		lblThiGian_1_2.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		lblThiGian_1_2.setBounds(10, 158, 113, 30);
+		lblThiGian_1_2.setBounds(10, 177, 113, 30);
 		add(lblThiGian_1_2);
 		
 		JLabel lblNgySinh = new JLabel("Ng\u00E0y sinh");
 		lblNgySinh.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		lblNgySinh.setBounds(10, 199, 113, 30);
+		lblNgySinh.setBounds(10, 230, 113, 30);
 		add(lblNgySinh);
 		
 		JLabel lblThiGian_1_1_1 = new JLabel("Quan h\u1EC7");
 		lblThiGian_1_1_1.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		lblThiGian_1_1_1.setBounds(10, 241, 113, 30);
+		lblThiGian_1_1_1.setBounds(10, 282, 113, 30);
 		add(lblThiGian_1_1_1);
 		
 		txtTenTN = new JTextField();
 		txtTenTN.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		txtTenTN.setColumns(10);
-		txtTenTN.setBounds(154, 76, 388, 30);
+		txtTenTN.setBounds(154, 76, 193, 30);
 		add(txtTenTN);
 		
 		txtMaNV = new JTextField();
 		txtMaNV.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		txtMaNV.setColumns(10);
-		txtMaNV.setBounds(154, 118, 388, 30);
+		txtMaNV.setBounds(154, 124, 193, 30);
 		add(txtMaNV);
 		
 		txtNgaySinh = new JTextField();
 		txtNgaySinh.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		txtNgaySinh.setColumns(10);
-		txtNgaySinh.setBounds(154, 199, 388, 30);
+		txtNgaySinh.setBounds(154, 230, 193, 30);
 		add(txtNgaySinh);
 		
 		txtQuanhe = new JTextField();
 		txtQuanhe.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		txtQuanhe.setColumns(10);
-		txtQuanhe.setBounds(154, 241, 388, 30);
+		txtQuanhe.setBounds(154, 282, 193, 30);
 		add(txtQuanhe);
 		
 		JComboBox<String> cbGioiTinh = new JComboBox<String>();
@@ -106,16 +106,16 @@ public class ThanNhanForm extends JPanel {
 		cbGioiTinh.addItem("nu");
 		cbGioiTinh.addItem("khac");
 		cbGioiTinh.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		cbGioiTinh.setBounds(154, 158, 388, 30);
+		cbGioiTinh.setBounds(154, 177, 193, 30);
 		add(cbGioiTinh);
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
-		panel.setBounds(10, 282, 936, 295);
+		panel.setBounds(357, 76, 589, 481);
 		add(panel);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 0, 936, 295);
+		scrollPane.setBounds(0, 0, 589, 481);
 		panel.add(scrollPane);
 		
 		table = new JTable();
@@ -131,7 +131,7 @@ public class ThanNhanForm extends JPanel {
 				EnableControl();
 			}
 		});
-		LoadData();
+		LoadData(null);
 		scrollPane.setViewportView(table);
 		
 		btnThem = new JButton("Thêm");
@@ -145,7 +145,7 @@ public class ThanNhanForm extends JPanel {
 		});
 		btnThem.setIcon(new ImageIcon(ThanNhanForm.class.getResource("/images/icons8_add_32px.png")));
 		btnThem.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		btnThem.setBounds(631, 76, 115, 50);
+		btnThem.setBounds(10, 428, 140, 50);
 		add(btnThem);
 		
 		btnLuu = new JButton("Lưu");
@@ -160,7 +160,7 @@ public class ThanNhanForm extends JPanel {
 				if(flagThem) {
 					if(ThanNhanDAO.themThanNhan(tn)) {
 						JOptionPane.showMessageDialog(btnLuu, "Đã thêm thông tin thân nhân mới!");
-						LoadData();
+						LoadData(null);
 					}
 					else {
 						JOptionPane.showMessageDialog(btnLuu, "Vui lòng kiểm tra lại thông tin!");
@@ -170,7 +170,7 @@ public class ThanNhanForm extends JPanel {
 				else {
 					if(ThanNhanDAO.suaThanNhan(tn)) {
 						JOptionPane.showMessageDialog(btnLuu, "Đã sửa thông tin thân nhân!");
-						LoadData();
+						LoadData(null);
 					}
 					else {
 						JOptionPane.showMessageDialog(btnLuu, "Vui lòng kiểm tra lại thông tin!");
@@ -184,7 +184,7 @@ public class ThanNhanForm extends JPanel {
 		});
 		btnLuu.setIcon(new ImageIcon(ThanNhanForm.class.getResource("/images/icons8_save_32px.png")));
 		btnLuu.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		btnLuu.setBounds(631, 154, 115, 50);
+		btnLuu.setBounds(10, 503, 140, 50);
 		add(btnLuu);
 		
 		btnXoa = new JButton("Xóa");
@@ -194,7 +194,7 @@ public class ThanNhanForm extends JPanel {
 				if(JOptionPane.showConfirmDialog(btnXoa, "Bạn có chắc xóa thông tin của " + txtTenTN.getText() + "?") == JOptionPane.YES_OPTION) {
 					if(ThanNhanDAO.xoaThanNhan(txtTenTN.getText())) {
 						JOptionPane.showMessageDialog(btnXoa, "Xóa thông tin thành công!");
-						LoadData();
+						LoadData(null);
 					}
 					else {
 						JOptionPane.showMessageDialog(btnXoa, "Không thể xóa thông tin!");
@@ -207,7 +207,7 @@ public class ThanNhanForm extends JPanel {
 		});
 		btnXoa.setIcon(new ImageIcon(ThanNhanForm.class.getResource("/images/icons8_delete_32px.png")));
 		btnXoa.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		btnXoa.setBounds(806, 154, 115, 50);
+		btnXoa.setBounds(207, 503, 140, 50);
 		add(btnXoa);
 		
 		btnHuy = new JButton("Hủy");
@@ -221,25 +221,72 @@ public class ThanNhanForm extends JPanel {
 		});
 		btnHuy.setIcon(new ImageIcon(ThanNhanForm.class.getResource("/images/icons8_cancel_32px.png")));
 		btnHuy.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		btnHuy.setBounds(806, 76, 115, 50);
+		btnHuy.setBounds(207, 428, 140, 50);
 		add(btnHuy);
+		
+		JButton btnReLoad = new JButton("Tải lại");
+		btnReLoad.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LoadData(null);
+			}
+		});
+		btnReLoad.setIcon(new ImageIcon(ThanNhanForm.class.getResource("/images/reset_30px.png")));
+		btnReLoad.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		btnReLoad.setBounds(10, 355, 140, 50);
+		add(btnReLoad);
+		
+		JButton btnFind = new JButton("Tìm");
+		btnFind.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(txtMaNV.getText().trim().equals("")) {
+					JOptionPane.showMessageDialog(btnFind, "Không thể tìm thấy thông tin!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+					LoadData(null);
+				}
+				else {
+					LoadData(txtMaNV.getText());
+				}
+			}
+		});
+		btnFind.setToolTipText("Tìm theo mã nhân viên");
+		btnFind.setIcon(new ImageIcon(ThanNhanForm.class.getResource("/images/search_32px.png")));
+		btnFind.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		btnFind.setBounds(207, 355, 140, 50);
+		add(btnFind);
 	}
 	
-	private static void LoadData() {
+	private static void LoadData(String MaNVTN) {
 		String[] labels = {"Tên thân nhân", "Mã nhân viên", "Giới tính", "Ngày sinh", "Quan hệ"};
 		DefaultTableModel model = new DefaultTableModel(labels, 0);
-		ArrayList<ThanNhan> danhSach = ThanNhanDAO.LayThongTinThanNhan();
-		try {
-			for(ThanNhan tn : danhSach) {
-				Object[] row = {tn.getTenThanNhan(),
-								tn.getMaNVTN(),
-								tn.getPhai(),
-								tn.getNgaySinh(),
-								tn.getQuanHe()};
-				model.addRow(row);
+		ArrayList<ThanNhan> danhSach;
+		if (MaNVTN == null) {
+			danhSach = ThanNhanDAO.LayThongTinThanNhan();
+			try {
+				for(ThanNhan tn : danhSach) {
+					Object[] row = {tn.getTenThanNhan(),
+									tn.getMaNVTN(),
+									tn.getPhai(),
+									tn.getNgaySinh(),
+									tn.getQuanHe()};
+					model.addRow(row);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		}
+		else {
+			danhSach = ThanNhanDAO.LayThongTinThanNhan(Integer.valueOf(MaNVTN));
+			try {
+				for(ThanNhan tn : danhSach) {
+					Object[] row = {tn.getTenThanNhan(),
+									tn.getMaNVTN(),
+									tn.getPhai(),
+									tn.getNgaySinh(),
+									tn.getQuanHe()};
+					model.addRow(row);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		table.setModel(model);
 	}

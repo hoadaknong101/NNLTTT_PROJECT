@@ -1,16 +1,24 @@
 package gui;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Component;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JTabbedPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Window.Type;
 
 public class MainForm extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -20,6 +28,7 @@ public class MainForm extends JFrame {
 	private DuAnForm mProjectPanel;
 	private PhanCongVaLuongForm mAssignmentPanel;
 	private ThanNhanForm mRelativePanel;
+	private JTabbedPane tpPane;
 	private static MainForm frmMain=null;
 	private String taiKhoan;
 	JMenuItem mntmDangXuat = new JMenuItem("\u0110\u0103ng xu\u1EA5t");
@@ -36,6 +45,7 @@ public class MainForm extends JFrame {
     }
 	
 	public MainForm(String taiKhoan) {
+		setType(Type.UTILITY);
 		this.taiKhoan = taiKhoan;
 		initialize();
 	}
@@ -45,6 +55,12 @@ public class MainForm extends JFrame {
 		if (JOptionPane.showConfirmDialog(mntmDangXuat, "Bạn muốn đăng xuất?", "Thông báo", 
 				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION)
 		{
+			tpPane.removeAll();
+			mAssignmentPanel = null;
+			mProjectPanel = null;
+			mRelativePanel = null;
+			mRoomPanel = null;
+			mStaffPanel = null;
 			LoginForm.getInstance().setVisible(true);
 			this.dispose();
 		}
@@ -140,7 +156,7 @@ public class MainForm extends JFrame {
 		mntmCongTac.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		mnTroGiup.add(mntmCongTac);
 		
-		JTabbedPane tpPane = new JTabbedPane(JTabbedPane.TOP);
+		tpPane = new JTabbedPane(JTabbedPane.TOP);
 		tpPane.setBounds(10, 40, 966, 613);
 		getContentPane().add(tpPane);
 		
@@ -149,8 +165,35 @@ public class MainForm extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(mStaffPanel == null) {
 					mStaffPanel = new NhanVienForm();
-					//ImageIcon icon =new ImageIcon(getClass().getResource("edu/poly"))
 					tpPane.addTab("Quản Lý Nhân Viên",mStaffPanel);
+					
+					int index = tpPane.indexOfTab("Quản Lý Nhân Viên");
+					JPanel pnlTab = new JPanel(new GridBagLayout());
+					pnlTab.setOpaque(false);
+					JLabel lblTitle = new JLabel("Quản Lý Nhân Viên");
+					JButton btnClose = new JButton("x");
+
+					GridBagConstraints gbc = new GridBagConstraints();
+					gbc.gridx = 0;
+					gbc.gridy = 0;
+					gbc.weightx = 1;
+					
+					pnlTab.add(lblTitle, gbc);
+					gbc.gridx++;
+					gbc.weightx = 0;
+					pnlTab.add(btnClose, gbc);
+					
+					tpPane.setTabComponentAt(index, pnlTab);
+					btnClose.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							int index = tpPane.indexOfTab("Quản Lý Nhân Viên");
+							Component selected = tpPane.getComponentAt(index);
+						    	if (selected != null) {
+						    		mStaffPanel = null;
+						    		tpPane.remove(selected);
+						        }
+						}
+					});
 					tpPane.setSelectedComponent(mStaffPanel);
 				}
 				tpPane.setSelectedComponent(mStaffPanel);
@@ -166,6 +209,34 @@ public class MainForm extends JFrame {
 				if(mRoomPanel == null) {
 					mRoomPanel = new PhongBanForm();
 					tpPane.addTab("Quản Lý Phòng Ban",mRoomPanel);
+					
+					int index = tpPane.indexOfTab("Quản Lý Phòng Ban");
+					JPanel pnlTab = new JPanel(new GridBagLayout());
+					pnlTab.setOpaque(false);
+					JLabel lblTitle = new JLabel("Quản Lý Phòng Ban");
+					JButton btnClose = new JButton("x");
+
+					GridBagConstraints gbc = new GridBagConstraints();
+					gbc.gridx = 0;
+					gbc.gridy = 0;
+					gbc.weightx = 1;
+					
+					pnlTab.add(lblTitle, gbc);
+					gbc.gridx++;
+					gbc.weightx = 0;
+					pnlTab.add(btnClose, gbc);
+					
+					tpPane.setTabComponentAt(index, pnlTab);
+					btnClose.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							int index = tpPane.indexOfTab("Quản Lý Phòng Ban");
+							Component selected = tpPane.getComponentAt(index);
+						    	if (selected != null) {
+						    		mRoomPanel = null;
+						    		tpPane.remove(selected);
+						        }
+						}
+					});
 					tpPane.setSelectedComponent(mRoomPanel);
 				}
 				tpPane.setSelectedComponent(mRoomPanel);
@@ -183,6 +254,34 @@ public class MainForm extends JFrame {
 				if(mProjectPanel==null) {
 					mProjectPanel = new DuAnForm();
 					tpPane.addTab("Quản Lý Dự Án",mProjectPanel);
+					
+					int index = tpPane.indexOfTab("Quản Lý Dự Án");
+					JPanel pnlTab = new JPanel(new GridBagLayout());
+					pnlTab.setOpaque(false);
+					JLabel lblTitle = new JLabel("Quản Lý Dự Án");
+					JButton btnClose = new JButton("x");
+
+					GridBagConstraints gbc = new GridBagConstraints();
+					gbc.gridx = 0;
+					gbc.gridy = 0;
+					gbc.weightx = 1;
+					
+					pnlTab.add(lblTitle, gbc);
+					gbc.gridx++;
+					gbc.weightx = 0;
+					pnlTab.add(btnClose, gbc);
+					
+					tpPane.setTabComponentAt(index, pnlTab);
+					btnClose.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							int index = tpPane.indexOfTab("Quản Lý Dự Án");
+							Component selected = tpPane.getComponentAt(index);
+						    	if (selected != null) {
+						    		mProjectPanel = null;
+						    		tpPane.remove(selected);
+						        }
+						}
+					});
 					tpPane.setSelectedComponent(mProjectPanel);
 				}
 				tpPane.setSelectedComponent(mProjectPanel);
@@ -201,6 +300,34 @@ public class MainForm extends JFrame {
 				if(mAssignmentPanel == null) {
 					mAssignmentPanel = new PhanCongVaLuongForm();
 					tpPane.addTab("Quản Lý Phân Công",mAssignmentPanel);
+					
+					int index = tpPane.indexOfTab("Quản Lý Phân Công");
+					JPanel pnlTab = new JPanel(new GridBagLayout());
+					pnlTab.setOpaque(false);
+					JLabel lblTitle = new JLabel("Quản Lý Phân Công");
+					JButton btnClose = new JButton("x");
+
+					GridBagConstraints gbc = new GridBagConstraints();
+					gbc.gridx = 0;
+					gbc.gridy = 0;
+					gbc.weightx = 1;
+					
+					pnlTab.add(lblTitle, gbc);
+					gbc.gridx++;
+					gbc.weightx = 0;
+					pnlTab.add(btnClose, gbc);
+					
+					tpPane.setTabComponentAt(index, pnlTab);
+					btnClose.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							int index = tpPane.indexOfTab("Quản Lý Phân Công");
+							Component selected = tpPane.getComponentAt(index);
+						    	if (selected != null) {
+						    		mAssignmentPanel = null;
+						    		tpPane.remove(selected);
+						        }
+						}
+					});
 					tpPane.setSelectedComponent(mAssignmentPanel);
 				}
 				tpPane.setSelectedComponent(mAssignmentPanel);
@@ -222,6 +349,34 @@ public class MainForm extends JFrame {
 				if(mRelativePanel == null) {
 					mRelativePanel = new ThanNhanForm();
 					tpPane.addTab("Thông tin thân nhân",mRelativePanel);
+					
+					int index = tpPane.indexOfTab("Thông tin thân nhân");
+					JPanel pnlTab = new JPanel(new GridBagLayout());
+					pnlTab.setOpaque(false);
+					JLabel lblTitle = new JLabel("Thông tin thân nhân");
+					JButton btnClose = new JButton("x");
+
+					GridBagConstraints gbc = new GridBagConstraints();
+					gbc.gridx = 0;
+					gbc.gridy = 0;
+					gbc.weightx = 1;
+					
+					pnlTab.add(lblTitle, gbc);
+					gbc.gridx++;
+					gbc.weightx = 0;
+					pnlTab.add(btnClose, gbc);
+					
+					tpPane.setTabComponentAt(index, pnlTab);
+					btnClose.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							int index = tpPane.indexOfTab("Thông tin thân nhân");
+							Component selected = tpPane.getComponentAt(index);
+						    	if (selected != null) {
+						    		mRelativePanel = null;
+						    		tpPane.remove(selected);
+						        }
+						}
+					});
 					tpPane.setSelectedComponent(mRelativePanel);
 				}
 				tpPane.setSelectedComponent(mRelativePanel);

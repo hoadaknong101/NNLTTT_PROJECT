@@ -14,6 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Window.Type;
 
 public class DoiMatKhauForm extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -27,6 +28,7 @@ public class DoiMatKhauForm extends JFrame {
 	 * Create the application.
 	 */
 	public DoiMatKhauForm(String taiKhoan) {
+		setType(Type.UTILITY);
 		this.tenTaiKhoan = taiKhoan;
 		initialize();
 	}
@@ -35,7 +37,6 @@ public class DoiMatKhauForm extends JFrame {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-//		frame = new JFrame();
 		setBounds(100, 100, 383, 341);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		getContentPane().setLayout(null);
@@ -97,21 +98,21 @@ public class DoiMatKhauForm extends JFrame {
 				if (NhanVienDAO.kiemTraThongTinDangNhap(txtTaiKhoan.getText(), txtMatKhauCu.getText())) {
 					if (txtMatKhauMoi.getText().equals(txtXacNhan.getText())) {
 						if (NhanVienDAO.updateMatKhau(txtTaiKhoan.getText(), txtMatKhauMoi.getText())) {
-							JOptionPane.showMessageDialog(btnLuu, "Đổi mật khẩu thành công!");
+							JOptionPane.showMessageDialog(btnLuu, "Đổi mật khẩu thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 						}
 					}
 					else {
-						JOptionPane.showMessageDialog(btnLuu, "Mật khẩu xác nhận không trùng khớp!");
+						JOptionPane.showMessageDialog(btnLuu, "Mật khẩu xác nhận không trùng khớp!", "Thông báo", JOptionPane.WARNING_MESSAGE);
 					}
 				} 
 				else {
-					JOptionPane.showMessageDialog(btnLuu, "Mật khẩu cũ không đúng!");
+					JOptionPane.showMessageDialog(btnLuu, "Mật khẩu cũ không đúng!", "Thông báo", JOptionPane.WARNING_MESSAGE);
 				}
 
 			}
 		});
 		btnLuu.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		btnLuu.setBounds(43, 230, 115, 50);
+		btnLuu.setBounds(39, 230, 115, 50);
 		btnLuu.setIcon(new ImageIcon(getClass().getResource("/images/icons8_save_32px.png")));
 		getContentPane().add(btnLuu);
 

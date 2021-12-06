@@ -33,6 +33,25 @@ public class DuAnDAO {
 		}
 	}
 	
+	public static ArrayList<DuAn> LayThongTinDuAn(int MaPB){
+		try {
+			statement = connection.prepareCall("{call getDuAnTheoPhong(?)}");
+			statement.setInt(1, MaPB);
+			ResultSet rs = statement.executeQuery();
+			ArrayList<DuAn> danhSach = new ArrayList<DuAn>();
+			while(rs.next()) {
+				DuAn da = new DuAn(rs.getInt(1),
+								   rs.getString(2),
+								   rs.getString(3),
+								   rs.getInt(4));
+				danhSach.add(da);
+			}
+			return danhSach;
+		} catch (SQLException err) {
+			return null;
+		}
+	}
+	
 	public static boolean themDuAn(DuAn da) {
 		try {
 			statement = connection.prepareCall("{call insertDuAn(?,?,?,?)}");

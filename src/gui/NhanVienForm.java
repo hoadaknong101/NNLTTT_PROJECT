@@ -80,6 +80,11 @@ public class NhanVienForm extends JPanel {
 		lblLng.setBounds(10, 273, 113, 30);
 		add(lblLng);
 		
+		JLabel lblPhng = new JLabel("Ph\u00F2ng");
+		lblPhng.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		lblPhng.setBounds(357, 73, 64, 30);
+		add(lblPhng);
+		
 		JLabel lblMNgiQun = new JLabel("M\u00E3 Ng\u01B0\u1EDDi Qu\u1EA3n L\u00FD");
 		lblMNgiQun.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		lblMNgiQun.setBounds(357, 153, 146, 30);
@@ -115,25 +120,20 @@ public class NhanVienForm extends JPanel {
 		txtLuong.setBounds(166, 273, 500, 30);
 		add(txtLuong);
 		
-		txtMaNQL = new JTextField();
-		txtMaNQL.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-		txtMaNQL.setColumns(10);
-		txtMaNQL.setBounds(495, 153, 171, 30);
-		add(txtMaNQL);
-		
-		JLabel lblPhng = new JLabel("Ph\u00F2ng");
-		lblPhng.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		lblPhng.setBounds(357, 73, 64, 30);
-		add(lblPhng);
-		
 		txtPhong = new JTextField();
 		txtPhong.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		txtPhong.setColumns(10);
 		txtPhong.setBounds(495, 75, 171, 30);
 		add(txtPhong);
 		
+		txtMaNQL = new JTextField();
+		txtMaNQL.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		txtMaNQL.setColumns(10);
+		txtMaNQL.setBounds(495, 153, 171, 30);
+		add(txtMaNQL);
+		
 		JPanel panel = new JPanel();
-		panel.setBounds(706, 73, 221, 299);
+		panel.setBounds(706, 61, 240, 323);
 		add(panel);
 		panel.setLayout(null);
 		
@@ -159,16 +159,16 @@ public class NhanVienForm extends JPanel {
 				}
 			}
 		});
-		btnChonAnh.setBounds(63, 242, 105, 50);
+		btnChonAnh.setBounds(67, 262, 105, 50);
 		panel.add(btnChonAnh);
 		
 		lblAvatar = new JLabel("\u1EA2nh");
 		lblAvatar.setIcon(new ImageIcon("D:/2.jpg"));
-		lblAvatar.setBounds(10, 10, 201, 228);
+		lblAvatar.setBounds(20, 11, 200, 240);
 		panel.add(lblAvatar);
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(10, 313, 686, 266);
+		panel_1.setBounds(10, 313, 686, 254);
 		add(panel_1);
 		panel_1.setLayout(null);
 		
@@ -181,7 +181,7 @@ public class NhanVienForm extends JPanel {
 		add(cbGender);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 0, 686, 266);
+		scrollPane.setBounds(0, 0, 686, 254);
 		panel_1.add(scrollPane);
 		
 		table = new JTable();
@@ -208,7 +208,7 @@ public class NhanVienForm extends JPanel {
 				EnableControl();
 			}
 		});
-		LoadData();
+		LoadData(null);
 		scrollPane.setViewportView(table);
 		
 		btnThem = new JButton("Th\u00EAm");
@@ -222,7 +222,7 @@ public class NhanVienForm extends JPanel {
 		});
 		btnThem.setIcon(new ImageIcon(getClass().getResource("/images/icons8_add_32px.png")));
 		btnThem.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		btnThem.setBounds(706, 382, 115, 50);
+		btnThem.setBounds(706, 395, 115, 50);
 		add(btnThem);
 		
 		btnHuy = new JButton("H\u1EE7y");
@@ -236,7 +236,7 @@ public class NhanVienForm extends JPanel {
 		});
 		btnHuy.setIcon(new ImageIcon(getClass().getResource("/images/icons8_cancel_32px.png")));
 		btnHuy.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		btnHuy.setBounds(831, 442, 115, 50);
+		btnHuy.setBounds(831, 456, 115, 50);
 		add(btnHuy);
 		
 		btnLuu = new JButton("L\u01B0u");
@@ -261,21 +261,21 @@ public class NhanVienForm extends JPanel {
 						   (ImageIcon)lblAvatar.getIcon());
 				if(flagThem) {
 					if(NhanVienDAO.themNhanVien(nv)) {
-						JOptionPane.showMessageDialog(btnLuu, "Thêm nhân viên thành công!");
-						LoadData();
+						JOptionPane.showMessageDialog(btnLuu, "Thêm nhân viên thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+						LoadData(null);
 					}
 					else {
-						JOptionPane.showMessageDialog(btnLuu, "Vui lòng kiểm tra lại thông tin!");
+						JOptionPane.showMessageDialog(btnLuu, "Vui lòng kiểm tra lại thông tin!", "Thông báo", JOptionPane.ERROR_MESSAGE);
 						return;
 					}
 				}
 				else {
 					if(NhanVienDAO.suaNhanVien(nv)) {
-						JOptionPane.showMessageDialog(btnLuu, "Sửa thông tin nhân viên thành công!");
-						LoadData();
+						JOptionPane.showMessageDialog(btnLuu, "Cập nhật thông tin nhân viên thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+						LoadData(null);
 					}
 					else {
-						JOptionPane.showMessageDialog(btnLuu, "Vui lòng kiểm tra lại thông tin!");
+						JOptionPane.showMessageDialog(btnLuu, "Vui lòng kiểm tra lại thông tin!", "Thông báo", JOptionPane.ERROR_MESSAGE);
 						return;
 					}
 				}
@@ -286,7 +286,7 @@ public class NhanVienForm extends JPanel {
 		});
 		btnLuu.setIcon(new ImageIcon(getClass().getResource("/images/icons8_save_32px.png")));
 		btnLuu.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		btnLuu.setBounds(831, 383, 115, 50);
+		btnLuu.setBounds(831, 395, 115, 50);
 		add(btnLuu);
 		
 		btnXoa = new JButton("X\u00F3a");
@@ -294,13 +294,14 @@ public class NhanVienForm extends JPanel {
 		btnXoa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int id = Integer.valueOf(txtMaNhanVien.getText());
-				if(JOptionPane.showConfirmDialog(btnXoa, "Bạn có chắc xóa thông tin nhân viên " + txtHoTen.getText() + "?") == JOptionPane.YES_OPTION) {
+				if(JOptionPane.showConfirmDialog(btnXoa, "Bạn có chắc xóa thông tin nhân viên " + txtHoTen.getText() + "?",
+						"Thông báo", JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
 					if(NhanVienDAO.xoaNhanVien(id)) {
-						JOptionPane.showMessageDialog(btnXoa, "Xóa nhân viên thành công!");
-						LoadData();
+						JOptionPane.showMessageDialog(btnXoa, "Xóa nhân viên thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+						LoadData(null);
 					}
 					else {
-						JOptionPane.showMessageDialog(btnXoa, "Không thể xóa thông tin!");
+						JOptionPane.showMessageDialog(btnXoa, "Không thể xóa thông tin!", "Thông báo", JOptionPane.WARNING_MESSAGE);
 					}
 				}
 				ClearContent();
@@ -310,8 +311,37 @@ public class NhanVienForm extends JPanel {
 		});
 		btnXoa.setIcon(new ImageIcon(getClass().getResource("/images/icons8_delete_32px.png")));
 		btnXoa.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		btnXoa.setBounds(706, 443, 115, 50);
+		btnXoa.setBounds(706, 456, 115, 50);
 		add(btnXoa);
+		
+		JButton btnReLoad = new JButton("Tải lại");
+		btnReLoad.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LoadData(null);
+			}
+		});
+		btnReLoad.setIcon(new ImageIcon(NhanVienForm.class.getResource("/images/reset_30px.png")));
+		btnReLoad.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		btnReLoad.setBounds(706, 517, 115, 50);
+		add(btnReLoad);
+		
+		JButton btnFind = new JButton("Tìm");
+		btnFind.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(txtPhong.getText().trim().equals("")) {
+					JOptionPane.showMessageDialog(btnFind, "Không thể tìm thấy thông tin!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+					LoadData(null);
+				}
+				else {
+					LoadData(txtPhong.getText());
+				}
+			}
+		});
+		btnFind.setToolTipText("Tìm theo phòng ban");
+		btnFind.setIcon(new ImageIcon(NhanVienForm.class.getResource("/images/search_32px.png")));
+		btnFind.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		btnFind.setBounds(831, 517, 115, 50);
+		add(btnFind);
 	}
 	
 	private void EnableControl() {
@@ -337,27 +367,52 @@ public class NhanVienForm extends JPanel {
 		lblAvatar.setIcon(null);
 	}
 	
-	private void LoadData() {
+	private void LoadData(String MaPB) {
 		String[] labels = {"Mã NV", "Họ tên", "Ngày sinh", "Địa chỉ", "Giới tính", "Lương", "Mã NQL", "Phòng", "Image"};
 		DefaultTableModel tbModel = new DefaultTableModel(labels, 0);
-		ArrayList<NhanVien> nhanViens = NhanVienDAO.LayThongTinNhanVien();
-		try {
-			for (NhanVien nhanVien : nhanViens) {
-				String MaNQL = (nhanVien.getMaNQL() == 0) ? "" : String.valueOf(nhanVien.getMaNQL());
-				Object[] row = {nhanVien.getMaNhanVien(),
-								nhanVien.getHoTen(),
-								nhanVien.getNgaySinh(),
-								nhanVien.getDiaChi(),
-								nhanVien.getPhai(),
-								nhanVien.getLuong(),
-								MaNQL,
-								nhanVien.getMaPB(),
-								nhanVien.getImage()};
-				tbModel.addRow(row);
+		ArrayList<NhanVien> nhanViens;
+		if(MaPB == null) {
+			nhanViens = NhanVienDAO.LayThongTinNhanVien();
+			try {
+				for (NhanVien nhanVien : nhanViens) {
+					String MaNQL = (nhanVien.getMaNQL() == 0) ? "" : String.valueOf(nhanVien.getMaNQL());
+					Object[] row = {nhanVien.getMaNhanVien(),
+									nhanVien.getHoTen(),
+									nhanVien.getNgaySinh(),
+									nhanVien.getDiaChi(),
+									nhanVien.getPhai(),
+									nhanVien.getLuong(),
+									MaNQL,
+									nhanVien.getMaPB(),
+									nhanVien.getImage()};
+					tbModel.addRow(row);
+				}
+			} catch (Exception e1) {
+				e1.printStackTrace();
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		}
+		else {
+			nhanViens = NhanVienDAO.LayThongTinNhanVien(Integer.valueOf(MaPB));
+			try {
+				for (NhanVien nhanVien : nhanViens) {
+					String MaNQL = (nhanVien.getMaNQL() == 0) ? "" : String.valueOf(nhanVien.getMaNQL());
+					Object[] row = {nhanVien.getMaNhanVien(),
+									nhanVien.getHoTen(),
+									nhanVien.getNgaySinh(),
+									nhanVien.getDiaChi(),
+									nhanVien.getPhai(),
+									nhanVien.getLuong(),
+									MaNQL,
+									nhanVien.getMaPB(),
+									nhanVien.getImage()};
+					tbModel.addRow(row);
+				}
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
 		}
 		table.setModel(tbModel);
+		table.getColumnModel().getColumn(8).setMinWidth(0);
+		table.getColumnModel().getColumn(8).setMaxWidth(0);
 	}
 }

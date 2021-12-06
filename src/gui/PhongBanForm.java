@@ -60,29 +60,29 @@ public class PhongBanForm extends JPanel {
 		txtMaPhongBan = new JTextField();
 		txtMaPhongBan.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		txtMaPhongBan.setColumns(10);
-		txtMaPhongBan.setBounds(133, 71, 129, 30);
+		txtMaPhongBan.setBounds(133, 71, 144, 30);
 		add(txtMaPhongBan);
 		
 		JLabel lblTnPhngBan = new JLabel("T\u00EAn Ph\u00F2ng Ban");
 		lblTnPhngBan.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		lblTnPhngBan.setBounds(301, 69, 113, 30);
+		lblTnPhngBan.setBounds(10, 111, 113, 30);
 		add(lblTnPhngBan);
 		
 		txtTenPhongBan = new JTextField();
 		txtTenPhongBan.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		txtTenPhongBan.setColumns(10);
-		txtTenPhongBan.setBounds(427, 71, 181, 30);
+		txtTenPhongBan.setBounds(133, 112, 502, 30);
 		add(txtTenPhongBan);
 		
 		txtTruongPhong = new JTextField();
 		txtTruongPhong.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		txtTruongPhong.setColumns(10);
-		txtTruongPhong.setBounds(133, 111, 475, 30);
+		txtTruongPhong.setBounds(410, 70, 225, 30);
 		add(txtTruongPhong);
 		
 		JLabel lblTrngPhng = new JLabel("Tr\u01B0\u1EDFng Ph\u00F2ng\r\n");
 		lblTrngPhng.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		lblTrngPhng.setBounds(10, 109, 113, 30);
+		lblTrngPhng.setBounds(287, 69, 113, 30);
 		add(lblTrngPhng);
 		
 		JLabel lblNgyNhnChc = new JLabel("Ng\u00E0y Nh\u1EADn Ch\u1EE9c");
@@ -94,7 +94,7 @@ public class PhongBanForm extends JPanel {
 		txtNgayNhanChuc.setToolTipText("\u0110\u1ECBnh d\u1EA1ng: YYYY-MM-DD");
 		txtNgayNhanChuc.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		txtNgayNhanChuc.setColumns(10);
-		txtNgayNhanChuc.setBounds(133, 153, 475, 30);
+		txtNgayNhanChuc.setBounds(133, 153, 267, 30);
 		add(txtNgayNhanChuc);
 		
 		JLabel lblaim = new JLabel("\u0110\u1ECBa \u0110i\u1EC3m");
@@ -105,7 +105,7 @@ public class PhongBanForm extends JPanel {
 		txtDiaDiem = new JTextField();
 		txtDiaDiem.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		txtDiaDiem.setColumns(10);
-		txtDiaDiem.setBounds(133, 193, 475, 30);
+		txtDiaDiem.setBounds(133, 193, 502, 30);
 		add(txtDiaDiem);
 		
 		JPanel panel = new JPanel();
@@ -144,13 +144,14 @@ public class PhongBanForm extends JPanel {
 		btnXoa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int id = Integer.valueOf(txtMaPhongBan.getText());
-				if(JOptionPane.showConfirmDialog(btnXoa, "Bạn có chắc xóa thông tin phòng " + txtTenPhongBan.getText() + "?") == JOptionPane.YES_OPTION) {
+				if(JOptionPane.showConfirmDialog(btnXoa, "Bạn có chắc xóa thông tin phòng " + txtTenPhongBan.getText() + "?", 
+						"Thông báo", JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
 					if(PhongBanDAO.xoaPhongBan(id)) {
-						JOptionPane.showMessageDialog(btnXoa, "Xóa phòng ban thành công!");
+						JOptionPane.showMessageDialog(btnXoa, "Xóa phòng ban thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 						LoadData();
 					}
 					else {
-						JOptionPane.showMessageDialog(btnXoa, "Không thể xóa thông tin!");
+						JOptionPane.showMessageDialog(btnXoa, "Không thể xóa thông tin!", "Thông báo", JOptionPane.WARNING_MESSAGE);
 					}
 				}
 				ClearContent();
@@ -160,7 +161,7 @@ public class PhongBanForm extends JPanel {
 		});
 		btnXoa.setIcon(new ImageIcon(getClass().getResource("/images/icons8_delete_32px.png")));
 		btnXoa.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		btnXoa.setBounds(783, 150, 115, 50);
+		btnXoa.setBounds(817, 150, 129, 71);
 		add(btnXoa);
 		
 		btnLuu = new JButton("L\u01B0u");
@@ -176,21 +177,21 @@ public class PhongBanForm extends JPanel {
 						   txtDiaDiem.getText());
 				if(flagThem) {
 					if(PhongBanDAO.themPhongBan(pb)) {
-						JOptionPane.showMessageDialog(btnLuu, "Đã thêm thông tin phòng ban mới!");
+						JOptionPane.showMessageDialog(btnLuu, "Đã thêm thông tin phòng ban mới!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 						LoadData();
 					}
 					else {
-						JOptionPane.showMessageDialog(btnLuu, "Vui lòng kiểm tra lại thông tin!");
+						JOptionPane.showMessageDialog(btnLuu, "Vui lòng kiểm tra lại thông tin!", "Thông báo", JOptionPane.ERROR_MESSAGE);
 						return;
 					}
 				}
 				else {
 					if(PhongBanDAO.suaPhongBan(pb)) {
-						JOptionPane.showMessageDialog(btnLuu, "Đã sửa thông tin phòng ban!");
+						JOptionPane.showMessageDialog(btnLuu, "Đã sửa thông tin phòng ban!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 						LoadData();
 					}
 					else {
-						JOptionPane.showMessageDialog(btnLuu, "Vui lòng kiểm tra lại thông tin!");
+						JOptionPane.showMessageDialog(btnLuu, "Vui lòng kiểm tra lại thông tin!", "Thông báo", JOptionPane.ERROR_MESSAGE);
 						return;
 					}
 				}
@@ -201,7 +202,7 @@ public class PhongBanForm extends JPanel {
 		});
 		btnLuu.setIcon(new ImageIcon(getClass().getResource("/images/icons8_save_32px.png")));
 		btnLuu.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		btnLuu.setBounds(658, 150, 115, 50);
+		btnLuu.setBounds(678, 150, 129, 71);
 		add(btnLuu);
 		
 		btnThem = new JButton("Th\u00EAm");
@@ -215,7 +216,7 @@ public class PhongBanForm extends JPanel {
 		});
 		btnThem.setIcon(new ImageIcon(getClass().getResource("/images/icons8_add_32px.png")));
 		btnThem.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		btnThem.setBounds(658, 90, 115, 50);
+		btnThem.setBounds(678, 70, 129, 71);
 		add(btnThem);
 		
 		btnHuy = new JButton("H\u1EE7y");
@@ -229,7 +230,7 @@ public class PhongBanForm extends JPanel {
 		});
 		btnHuy.setIcon(new ImageIcon(getClass().getResource("/images/icons8_cancel_32px.png")));
 		btnHuy.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		btnHuy.setBounds(783, 90, 115, 50);
+		btnHuy.setBounds(817, 70, 129, 71);
 		add(btnHuy);
 
 	}

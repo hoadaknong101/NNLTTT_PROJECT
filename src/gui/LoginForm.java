@@ -58,7 +58,7 @@ public class LoginForm extends JFrame {
 		String passText = new String(txtPassword.getPassword());
 		
 		if(txtUser.getText().trim().isEmpty() || passText.isEmpty()) {
-			JOptionPane.showMessageDialog(btnDangNhap, "Vui lòng nhập đủ thông tin!");
+			JOptionPane.showMessageDialog(btnDangNhap, "Vui lòng nhập đủ thông tin!", "Thông báo", JOptionPane.WARNING_MESSAGE);
 			return;
 		}
 		else if(KiemTraThongTinDangNhap(txtUser.getText(), passText)){
@@ -67,7 +67,7 @@ public class LoginForm extends JFrame {
 		}
 		else {
 			JOptionPane.showMessageDialog(btnDangNhap, "Sai thông tin đăng nhập!"+"\n"
-					+ "Xin vui lòng nhập lại");
+					+ "Xin vui lòng nhập lại", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 	
