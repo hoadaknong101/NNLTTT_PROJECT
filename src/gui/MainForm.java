@@ -18,7 +18,6 @@ import javax.swing.JButton;
 import javax.swing.JTabbedPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.Window.Type;
 
 public class MainForm extends JFrame {
 	private static final long serialVersionUID = 1L;
