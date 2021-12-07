@@ -26,7 +26,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.SwingConstants;
 
-public class PhanCongVaLuongForm extends JPanel {
+public class PhanCongForm extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTextField txtThoiGian;
 	private JTextField txtTienThuong;
@@ -46,10 +46,10 @@ public class PhanCongVaLuongForm extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PhanCongVaLuongForm() {
+	public PhanCongForm() {
 		setLayout(null);
 		
-		JLabel lblQunLPhn = new JLabel("Qu\u1EA3n L\u00FD Ph\u00E2n C\u00F4ng V\u00E0 L\u01B0\u01A1ng");
+		JLabel lblQunLPhn = new JLabel("Thông Tin Phân Công ");
 		lblQunLPhn.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		lblQunLPhn.setBounds(10, 10, 305, 30);
 		add(lblQunLPhn);
@@ -64,6 +64,7 @@ public class PhanCongVaLuongForm extends JPanel {
 		add(lblThiGian);
 		
 		txtThoiGian = new JTextField();
+		txtThoiGian.setToolTipText("Ngày bắt đầu dự án");
 		txtThoiGian.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		txtThoiGian.setColumns(10);
 		txtThoiGian.setBounds(133, 61, 330, 30);
@@ -181,7 +182,7 @@ public class PhanCongVaLuongForm extends JPanel {
 				btnXoa.setEnabled(false);
 			}
 		});
-		btnThem.setIcon(new ImageIcon(PhanCongVaLuongForm.class.getResource("/images/icons8_add_32px.png")));
+		btnThem.setIcon(new ImageIcon(PhanCongForm.class.getResource("/images/icons8_add_32px.png")));
 		btnThem.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		btnThem.setBounds(249, 515, 115, 50);
 		add(btnThem);
@@ -195,7 +196,7 @@ public class PhanCongVaLuongForm extends JPanel {
 				flagThem = false;
 			}
 		});
-		btnHuy.setIcon(new ImageIcon(PhanCongVaLuongForm.class.getResource("/images/icons8_cancel_32px.png")));
+		btnHuy.setIcon(new ImageIcon(PhanCongForm.class.getResource("/images/icons8_cancel_32px.png")));
 		btnHuy.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		btnHuy.setBounds(613, 515, 115, 50);
 		add(btnHuy);
@@ -204,9 +205,10 @@ public class PhanCongVaLuongForm extends JPanel {
 		btnLuu.setEnabled(false);
 		btnLuu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PhanCong pc = new PhanCong(Integer.valueOf(txtMaDuAn.getText()), 
-						   				   Integer.valueOf(txtMaNhanVien.getText()),
-						   				   Date.valueOf(txtThoiGian.getText()),
+				Date ngBatDau = (txtThoiGian.getText().trim().isEmpty()) ? null: Date.valueOf(txtThoiGian.getText()); 
+				PhanCong pc = new PhanCong(Integer.valueOf(txtMaNhanVien.getText()),
+										   Integer.valueOf(txtMaDuAn.getText()), 
+						   				   ngBatDau,
 						   				   Integer.valueOf(txtTienThuong.getText()));
 				if(flagThem) {
 					if(PhanCongDAO.themPhanCong(pc)) {
@@ -233,7 +235,7 @@ public class PhanCongVaLuongForm extends JPanel {
 				flagThem = false;
 			}
 		});
-		btnLuu.setIcon(new ImageIcon(PhanCongVaLuongForm.class.getResource("/images/icons8_save_32px.png")));
+		btnLuu.setIcon(new ImageIcon(PhanCongForm.class.getResource("/images/icons8_save_32px.png")));
 		btnLuu.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		btnLuu.setBounds(431, 515, 115, 50);
 		add(btnLuu);
@@ -244,7 +246,7 @@ public class PhanCongVaLuongForm extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				if(JOptionPane.showConfirmDialog(btnXoa, "Bạn có chắc xóa nhân viên " + txtTenNhanVien.getText() +
 						" ra khỏi dự án " + txtTenDuAn.getText() + "?", 
-						"Thông báo", JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+						"Thông báo", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 					if(PhanCongDAO.xoaPhanCong(Integer.valueOf(txtMaDuAn.getText()), 
 											   Integer.valueOf(txtMaNhanVien.getText()))) {
 						JOptionPane.showMessageDialog(btnXoa, "Xóa thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
@@ -259,7 +261,7 @@ public class PhanCongVaLuongForm extends JPanel {
 				flagThem = false;
 			}
 		});
-		btnXoa.setIcon(new ImageIcon(PhanCongVaLuongForm.class.getResource("/images/icons8_delete_32px.png")));
+		btnXoa.setIcon(new ImageIcon(PhanCongForm.class.getResource("/images/icons8_delete_32px.png")));
 		btnXoa.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		btnXoa.setBounds(795, 515, 115, 50);
 		add(btnXoa);
@@ -292,7 +294,7 @@ public class PhanCongVaLuongForm extends JPanel {
 				LoadData();
 			}
 		});
-		btnReLoad.setIcon(new ImageIcon(PhanCongVaLuongForm.class.getResource("/images/reset_30px.png")));
+		btnReLoad.setIcon(new ImageIcon(PhanCongForm.class.getResource("/images/reset_30px.png")));
 		btnReLoad.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		btnReLoad.setBounds(67, 515, 115, 50);
 		add(btnReLoad);
@@ -303,7 +305,12 @@ public class PhanCongVaLuongForm extends JPanel {
 		if(datas != null) {
 			txtMaNhanVien.setText(datas[0].toString());
 			txtMaDuAn.setText(datas[1].toString());
-			txtThoiGian.setText(datas[2].toString());
+			if(datas[2] != null) {
+				txtThoiGian.setText(datas[2].toString());				
+			}
+			else {
+				txtThoiGian.setText("");
+			}
 			txtTienThuong.setText(datas[3].toString());
 			txtTenDuAn.setText(datas[4].toString());
 			txtPhongTrienKhai.setText(datas[5].toString());

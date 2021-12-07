@@ -6,19 +6,19 @@ import javax.swing.JMenuBar;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Color;
 import java.awt.Component;
+import java.awt.Desktop;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTabbedPane;
 import java.awt.event.ActionListener;
+import java.net.URI;
 import java.awt.event.ActionEvent;
 
 public class MainForm extends JFrame {
@@ -27,7 +27,7 @@ public class MainForm extends JFrame {
 	private NhanVienForm mStaffPanel;
 	private PhongBanForm mRoomPanel;
 	private DuAnForm mProjectPanel;
-	private PhanCongVaLuongForm mAssignmentPanel;
+	private PhanCongForm mAssignmentPanel;
 	private ThanNhanForm mRelativePanel;
 	private JTabbedPane tpPane;
 	private static MainForm frmMain = null;
@@ -148,7 +148,13 @@ public class MainForm extends JFrame {
 		mntmCongTac.setIcon(new ImageIcon(MainForm.class.getResource("/images/icons8_email_send_32px.png")));
 		mntmCongTac.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showInputDialog("Nhập email của bạn để liên lạc với chúng tôi!");
+				try {
+					  Desktop desktop = java.awt.Desktop.getDesktop();
+					  URI oURL = new URI("https://github.com/hoadaknong101/NNLTTT_PROJECT");
+					  desktop.browse(oURL);
+				} catch (Exception err) {
+					  err.printStackTrace();
+				}
 			}
 		});
 		mntmCongTac.setFont(new Font("Times New Roman", Font.BOLD, 16));
@@ -292,17 +298,17 @@ public class MainForm extends JFrame {
 		mntmQuanLyDuAn.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		mnQuanLy.add(mntmQuanLyDuAn);
 
-		JMenuItem mntmPhanCong = new JMenuItem("Ph\u00E2n c\u00F4ng & L\u01B0\u01A1ng");
+		JMenuItem mntmPhanCong = new JMenuItem("Phân công công việc");
 		mntmPhanCong.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (mAssignmentPanel == null) {
-					mAssignmentPanel = new PhanCongVaLuongForm();
-					tpPane.addTab("Quản Lý Phân Công", mAssignmentPanel);
+					mAssignmentPanel = new PhanCongForm();
+					tpPane.addTab("Phân công công việc", mAssignmentPanel);
 
-					int index = tpPane.indexOfTab("Quản Lý Phân Công");
+					int index = tpPane.indexOfTab("Phân công công việc");
 					JPanel pnlTab = new JPanel(new GridBagLayout());
 					pnlTab.setOpaque(false);
-					JLabel lblTitle = new JLabel("Quản Lý Phân Công");
+					JLabel lblTitle = new JLabel("Phân công công việc");
 					JButton btnClose = new JButton("x");
 
 					GridBagConstraints gbc = new GridBagConstraints();
@@ -318,7 +324,7 @@ public class MainForm extends JFrame {
 					tpPane.setTabComponentAt(index, pnlTab);
 					btnClose.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
-							int index = tpPane.indexOfTab("Quản Lý Phân Công");
+							int index = tpPane.indexOfTab("Phân công công việc");
 							Component selected = tpPane.getComponentAt(index);
 							if (selected != null) {
 								mAssignmentPanel = null;

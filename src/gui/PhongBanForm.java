@@ -145,7 +145,7 @@ public class PhongBanForm extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				int id = Integer.valueOf(txtMaPhongBan.getText());
 				if(JOptionPane.showConfirmDialog(btnXoa, "Bạn có chắc xóa thông tin phòng " + txtTenPhongBan.getText() + "?", 
-						"Thông báo", JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+						"Thông báo", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 					if(PhongBanDAO.xoaPhongBan(id)) {
 						JOptionPane.showMessageDialog(btnXoa, "Xóa phòng ban thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 						LoadData();

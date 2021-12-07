@@ -41,13 +41,13 @@ public class NhanVienForm extends JPanel {
 	public NhanVienForm() {
 		setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Qu\u1EA3n L\u00FD Nh\u00E2n Vi\u00EAn");
+		JLabel lblNewLabel = new JLabel("Quản Lý Nhân Viên");
 		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 18));
-		lblNewLabel.setBounds(20, 10, 305, 30);
+		lblNewLabel.setBounds(10, 10, 305, 30);
 		add(lblNewLabel);
 		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(30, 50, 936, 13);
+		separator.setBounds(10, 51, 936, 13);
 		add(separator);
 		
 		JLabel lblMNhnVin = new JLabel("M\u00E3 Nh\u00E2n Vi\u00EAn");
@@ -295,7 +295,7 @@ public class NhanVienForm extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				int id = Integer.valueOf(txtMaNhanVien.getText());
 				if(JOptionPane.showConfirmDialog(btnXoa, "Bạn có chắc xóa thông tin nhân viên " + txtHoTen.getText() + "?",
-						"Thông báo", JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+						"Thông báo", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 					if(NhanVienDAO.xoaNhanVien(id)) {
 						JOptionPane.showMessageDialog(btnXoa, "Xóa nhân viên thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 						LoadData(null);
@@ -368,49 +368,35 @@ public class NhanVienForm extends JPanel {
 	}
 	
 	private void LoadData(String MaPB) {
-		String[] labels = {"Mã NV", "Họ tên", "Ngày sinh", "Địa chỉ", "Giới tính", "Lương", "Mã NQL", "Phòng", "Image"};
+		String[] labels = {"Mã NV", "Họ tên", "Ngày sinh", "Địa chỉ", "Giới tính", "Lương cơ bản", "Mã NQL", "Phòng", "Image"};
 		DefaultTableModel tbModel = new DefaultTableModel(labels, 0);
+		
 		ArrayList<NhanVien> nhanViens;
 		if(MaPB == null) {
 			nhanViens = NhanVienDAO.LayThongTinNhanVien();
-			try {
-				for (NhanVien nhanVien : nhanViens) {
-					String MaNQL = (nhanVien.getMaNQL() == 0) ? "" : String.valueOf(nhanVien.getMaNQL());
-					Object[] row = {nhanVien.getMaNhanVien(),
-									nhanVien.getHoTen(),
-									nhanVien.getNgaySinh(),
-									nhanVien.getDiaChi(),
-									nhanVien.getPhai(),
-									nhanVien.getLuong(),
-									MaNQL,
-									nhanVien.getMaPB(),
-									nhanVien.getImage()};
-					tbModel.addRow(row);
-				}
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
 		}
 		else {
 			nhanViens = NhanVienDAO.LayThongTinNhanVien(Integer.valueOf(MaPB));
-			try {
-				for (NhanVien nhanVien : nhanViens) {
-					String MaNQL = (nhanVien.getMaNQL() == 0) ? "" : String.valueOf(nhanVien.getMaNQL());
-					Object[] row = {nhanVien.getMaNhanVien(),
-									nhanVien.getHoTen(),
-									nhanVien.getNgaySinh(),
-									nhanVien.getDiaChi(),
-									nhanVien.getPhai(),
-									nhanVien.getLuong(),
-									MaNQL,
-									nhanVien.getMaPB(),
-									nhanVien.getImage()};
-					tbModel.addRow(row);
-				}
-			} catch (Exception e2) {
-				e2.printStackTrace();
-			}
 		}
+		
+		try {
+			for (NhanVien nhanVien : nhanViens) {
+				String MaNQL = (nhanVien.getMaNQL() == 0) ? "" : String.valueOf(nhanVien.getMaNQL());
+				Object[] row = {nhanVien.getMaNhanVien(),
+								nhanVien.getHoTen(),
+								nhanVien.getNgaySinh(),
+								nhanVien.getDiaChi(),
+								nhanVien.getPhai(),
+								nhanVien.getLuong(),
+								MaNQL,
+								nhanVien.getMaPB(),
+								nhanVien.getImage()};
+				tbModel.addRow(row);
+			}
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+		
 		table.setModel(tbModel);
 		table.getColumnModel().getColumn(8).setMinWidth(0);
 		table.getColumnModel().getColumn(8).setMaxWidth(0);

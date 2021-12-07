@@ -50,6 +50,7 @@ public class PhanCongDAO {
 			statement.execute();
 			return true;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 	}
@@ -69,6 +70,7 @@ public class PhanCongDAO {
 			statement.execute();
 			return true;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 	}
@@ -81,6 +83,7 @@ public class PhanCongDAO {
 			statement.execute();
 			return true;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 	}

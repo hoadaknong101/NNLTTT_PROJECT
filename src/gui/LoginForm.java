@@ -104,7 +104,6 @@ public class LoginForm extends JFrame {
 		lblNewLabel_1.setBounds(20, 90, 144, 30);
 		panel.add(lblNewLabel_1);
 		
-		
 		btnDangNhap.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				btnDangNhapActionPerformed(e);

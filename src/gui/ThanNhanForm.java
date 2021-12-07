@@ -191,7 +191,8 @@ public class ThanNhanForm extends JPanel {
 		btnXoa.setEnabled(false);
 		btnXoa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(JOptionPane.showConfirmDialog(btnXoa, "Bạn có chắc xóa thông tin của " + txtTenTN.getText() + "?") == JOptionPane.YES_OPTION) {
+				if(JOptionPane.showConfirmDialog(btnXoa, "Bạn có chắc xóa thông tin của thân nhân " + txtTenTN.getText() + "?",
+						"Thông báo", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 					if(ThanNhanDAO.xoaThanNhan(txtTenTN.getText())) {
 						JOptionPane.showMessageDialog(btnXoa, "Xóa thông tin thành công!");
 						LoadData(null);
@@ -257,36 +258,26 @@ public class ThanNhanForm extends JPanel {
 	private static void LoadData(String MaNVTN) {
 		String[] labels = {"Tên thân nhân", "Mã nhân viên", "Giới tính", "Ngày sinh", "Quan hệ"};
 		DefaultTableModel model = new DefaultTableModel(labels, 0);
+		
 		ArrayList<ThanNhan> danhSach;
 		if (MaNVTN == null) {
 			danhSach = ThanNhanDAO.LayThongTinThanNhan();
-			try {
-				for(ThanNhan tn : danhSach) {
-					Object[] row = {tn.getTenThanNhan(),
-									tn.getMaNVTN(),
-									tn.getPhai(),
-									tn.getNgaySinh(),
-									tn.getQuanHe()};
-					model.addRow(row);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
 		}
 		else {
 			danhSach = ThanNhanDAO.LayThongTinThanNhan(Integer.valueOf(MaNVTN));
-			try {
-				for(ThanNhan tn : danhSach) {
-					Object[] row = {tn.getTenThanNhan(),
-									tn.getMaNVTN(),
-									tn.getPhai(),
-									tn.getNgaySinh(),
-									tn.getQuanHe()};
-					model.addRow(row);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
+		}
+		
+		try {
+			for(ThanNhan tn : danhSach) {
+				Object[] row = {tn.getTenThanNhan(),
+								tn.getMaNVTN(),
+								tn.getPhai(),
+								tn.getNgaySinh(),
+								tn.getQuanHe()};
+				model.addRow(row);
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		table.setModel(model);
 	}

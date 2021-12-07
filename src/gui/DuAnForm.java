@@ -152,8 +152,8 @@ public class DuAnForm extends JPanel {
 		btnXoa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int id = Integer.valueOf(txtMaDuAn.getText());
-				if(JOptionPane.showConfirmDialog(btnXoa, "Bạn có chắc xóa thông tin dự án " + txtMaDuAn.getText() + "?", 
-						"Thông báo", JOptionPane.INFORMATION_MESSAGE) == JOptionPane.YES_OPTION) {
+				if(JOptionPane.showConfirmDialog(btnXoa, "Bạn có chắc xóa thông tin dự án \n" + txtTenDuAn.getText() + "?", 
+						"Thông báo", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 					if(DuAnDAO.xoaDuAn(id)) {
 						JOptionPane.showMessageDialog(btnXoa, "Xóa thông tin dự án thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 						LoadData(null);
@@ -256,34 +256,25 @@ public class DuAnForm extends JPanel {
 	private void LoadData(String maPB) {
 		String[] labels = {"Mã dự án", "Tên dự án", "Địa điểm", "Phòng"};
 		DefaultTableModel model = new DefaultTableModel(labels, 0);
+		
 		ArrayList<DuAn> danhSach;
 		if(maPB == null) {
 			danhSach = DuAnDAO.LayThongTinDuAn();
-			try {
-				for(DuAn da : danhSach) {
-					Object[] row = {da.getMaDuAn(),
-									da.getTenDuAn(),
-									da.getDiaDiem(),
-									da.getPhong()};
-					model.addRow(row);
-				}
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
 		}
 		else {
 			danhSach = DuAnDAO.LayThongTinDuAn(Integer.valueOf(maPB));
-			try {
-				for(DuAn da : danhSach) {
-					Object[] row = {da.getMaDuAn(),
-									da.getTenDuAn(),
-									da.getDiaDiem(),
-									da.getPhong()};
-					model.addRow(row);
-				}
-			} catch (Exception e2) {
-				e2.printStackTrace();
+		}
+		
+		try {
+			for(DuAn da : danhSach) {
+				Object[] row = {da.getMaDuAn(),
+								da.getTenDuAn(),
+								da.getDiaDiem(),
+								da.getPhong()};
+				model.addRow(row);
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		table.setModel(model);
 	}
